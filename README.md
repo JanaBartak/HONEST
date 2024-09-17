@@ -20,7 +20,7 @@ CH-4056 Basel
 
 Schweiz
 
-* jana.bartakova@unibas.ch
+Email: jana.bartakova@unibas.ch
 
 #### HONEST
 HONEST is a research project funded by European Uninon’s Marie Skłodowska-Curie Actions Programme. The HONEST project aims to facilitate the Swiss hospitals’ staff budget transparency and optimize investments in health systems through a better understanding of the association between nurse and physician wages and patient safety outcomes.
