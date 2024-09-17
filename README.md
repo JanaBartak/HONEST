@@ -10,11 +10,12 @@ Prof. Dr. Michael Simon, PhD (PI)
 Dr. Jana Bartakova, PhD, Health Economist (PI)
 
 #### Contact information
-* Universität Basel
-* Medizinische Fakultät | Department of Public Health (DPH)
-* Bernoullistrasse 28
-* CH-4056 Basel
-* Schweiz
+Institute of Nursing Science
+Medical Faculty | Department of Public Health (DPH) | University of Basel
+Bernoullistrasse 28
+CH-4056 Basel
+Schweiz
+
 * jana.bartakova@unibas.ch
 
 #### HONEST
