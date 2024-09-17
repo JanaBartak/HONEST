@@ -1,6 +1,7 @@
 This folder was set up by Jana Bartakova.
 
-#### Authors
+AUTHORS
+-------
 Sarah Holzer, MSc Nursing Science
 
 Aleksandra Vasic, Msc Nursing Science
@@ -9,7 +10,8 @@ Prof. Dr. Michael Simon, PhD (PI)
 
 Dr. Jana Bartakova, PhD, Health Economist (PI)
 
-#### Contact information
+CONTACT INFORMATION
+-------------------
 Institute of Nursing Science
 
 Medical Faculty | Department of Public Health (DPH) | University of Basel
@@ -22,7 +24,8 @@ Schweiz
 
 Email: jana.bartakova@unibas.ch
 
-#### HONEST
+HONEST
+------
 HONEST is a research project funded by European Uninon’s Marie Skłodowska-Curie Actions Programme. The HONEST project aims to facilitate the Swiss hospitals’ staff budget transparency and optimize investments in health systems through a better understanding of the association between nurse and physician wages and patient safety outcomes.
 
 #### Aim 1: 
@@ -38,8 +41,8 @@ Nexus of nurses' and physicians' wages and patient safety outcomes in acute care
 Cost-effectiveness and budget impact of hospitals’ investments in nurses’ and physicians’ wages
 
 
-### Description of substudies
-
+DESCRIPTION OF SUBSTUDIES
+-------------------------
 #### Aim 1 
 In this retrospective observational time series cross-sectional study based on de-identified data regularly collected by the Federal Statistical Office (BFS) which comprises information on Swiss acute care and specialized hospitals, as well as on staff (including nurses and physicians) employed in these hospitals from 2014 to 2020. After data cleaning and preparation, we conducted descriptive analysis. Eventually, we ran different regression models to determine the factors affecting wages for nurses and physicians.
 
@@ -68,15 +71,25 @@ FOLDERS/DIRECTORIES
  -------------
 
 Main folder HONEST
+
 	01_scripts_aim_1
+ 
  		01_data_cleaning
+   
    		02_descriptive_analysis
+     
      		03_inferential_analysis
+       
        02_scripts_aim_2
+       
  		01_data_cleaning
+   
    		02_descriptive_analysis
+     
      		03_inferential_analysis
+       
        HONEST.Rproj
+       
        README.md
 
 
