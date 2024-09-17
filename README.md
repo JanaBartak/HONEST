@@ -11,9 +11,13 @@ Dr. Jana Bartakova, PhD, Health Economist (PI)
 
 #### Contact information
 Institute of Nursing Science
+
 Medical Faculty | Department of Public Health (DPH) | University of Basel
+
 Bernoullistrasse 28
+
 CH-4056 Basel
+
 Schweiz
 
 * jana.bartakova@unibas.ch
