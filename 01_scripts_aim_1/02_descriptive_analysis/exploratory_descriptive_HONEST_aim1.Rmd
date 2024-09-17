@@ -1,0 +1,251 @@
+---
+title: "EDA_HONEST_aim_1"
+author: "Sarah Holzer"
+date: "`r Sys.Date()`"
+output:
+  html_document: 
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r load, echo=FALSE, include=FALSE}
+# Loading packages
+library(tidyverse)
+library(lme4)
+library(lmerTest)
+library(rptR)
+library(Matrix)
+library(ggplot2)
+library(ggdist)
+library(dplyr)
+library(scales)
+library(naniar)
+library(table1)
+
+# Load aggregated datasets honest and honest_DEF
+load("/Volumes/research$/HONEST Team/Data/aim_1_processed_data/07_FINAL_datasets.RData")
+
+# honest contains all observations without counting for inclusion and exclusion criteria at the hospital level while honest_DEF is the final dataset the inclusion/exclusion criteria were applied.
+
+```
+
+```{r dataset preparation for EDA, echo=FALSE, include=FALSE}
+# Removing variables not needed for EDA
+honest_DEF <- honest_DEF [, -which(names(honest_DEF) %in% c("LOHN_ARZT", "LOHN_PFLEGE", "pct.male_nurse", "pct.male_physician", "pct.notCH_nurse", "pct.notCH_physician", "PFLEGETAGE_STATIONAER", "AUSTRITTE_STATIONAER"))]
+
+# Relocating equipment
+honest_DEF <- honest_DEF %>% relocate (equipment, .before = AMBULANTE_KONSULTATIONEN)
+
+# Inserting monthly wage/FTE variable in honest_DEF and reposition it near the original vars
+honest_DEF$month_wageFTE_nurses <- honest_DEF$wageFTE_nurses/13
+honest_DEF <- honest_DEF %>% relocate (month_wageFTE_nurses, .after = wageFTE_nurses)
+
+honest_DEF$month_wageFTE_physicians <- honest_DEF$wageFTE_physicians/13
+honest_DEF <- honest_DEF %>% relocate (month_wageFTE_physicians, .after = wageFTE_physicians)
+
+# Inserting log(wage/FTE) variable in honest_DEF and reposition it near the original vars
+honest_DEF$log_wageFTE_nurses <- log(honest_DEF$wageFTE_nurses)
+honest_DEF <- honest_DEF %>% relocate (log_wageFTE_nurses, .after = wageFTE_nurses)
+
+honest_DEF$log_wageFTE_physicians <- log(honest_DEF$wageFTE_physicians)
+honest_DEF <- honest_DEF %>% relocate (log_wageFTE_physicians, .after = wageFTE_physicians)
+
+# Inserting age^2 variable in honest_DEF and reposition it near the original vars
+honest_DEF$age2.mean_nurse <- (honest_DEF$age.mean_nurse)^2
+honest_DEF <- honest_DEF %>% relocate (age2.mean_nurse, .after = age.mean_nurse)
+
+honest_DEF$age2.mean_physician <- (honest_DEF$age.mean_physician)^2
+honest_DEF <- honest_DEF %>% relocate (age2.mean_physician, .after = age.mean_physician)
+
+```
+
+
+
+
+
+## 1. About the project
+
+### Project Title
+***NURSES’ AND PHYSICIANS’ WAGES DRIVERS IN SWISS HOSPITALS: A RETROSPECTIVE OBSERVATIONAL TIME SERIES CROSS SECTIONAL STUDY***
+
+### Description
+In this retrospective observational time series cross-sectional study based on de-identified data regularly collected by the Federal Statistical Office (BFS) which comprises information on Swiss acute care and specialized hospitals, as well as on staff (including nurses and physicians) employed in these hospitals from 2014 to 2020. After data cleaning and preparation, we conducted descriptive analysis. Eventually, we ran different regression models to determine the factors affecting wages for nurses and physicians.
+
+
+## 2. Data Sources, Acquisition, and Cleaning
+
+### Data Sources 
+The original data sets are the typo_ks_personal_2014-2020, typo_ks_leistungen_2014-2020, typo_ks_kostentraeger_2014-2020, typo_ks_fibu_2014-2020, typo_ks_allg_2014-2020 and Leistung count in the KS_Typol_2014_2020 folder. This folder is located in the HONEST Team folder which is part of the Research$ folder on the nurseserve.urz.p.unibas.ch server.
+
+Further information about the dataset can be found here: https://www.bfs.admin.ch/bfs/de/home/statistiken/gesundheit/erhebungen/ks.html 
+
+### Data Acquisition
+The FSO provided de-identified data on hospitals and specialized care clinics in Switzerland from 2014 to 2020 based on a data protection contract. According to this contract (chapter 4.2), the panel data of the same statistics, i.e. the corresponding data from the survey dates 2014 - 2020, may be linked with each other. 
+
+Since the sample consisted of routinely collected, and de-identified data, it was exempt from ethics approval.
+
+#### Inclusion/Exclusion criteria for final dataset `honest_DEF`:
+
+- Inclusion criteria for acute care facilities: Swiss acute care hospitals and specialized acute care clinics with a physician full-time equivalent (FTE) of at least 1% of the overall FTEs of the hospital.
+- Personal inclusion criteria: Full- and part-time working nurses and physicians, including those in training, aged over 18 and under 65.
+- Employment contract requirement: Only nurses and physicians with a contract with an included hospital at the end of the year (31.12.) were included to avoid double-counting of staff in training or those who changed jobs.
+
+## 3. Exploratory Data Analysis
+
+### Univariate Analysis
+
+In the following section you will see the distribution of each variable. Including summary information and a density plot for each variable.
+
+
+
+```{r EDA, echo=FALSE, include=TRUE, warning=FALSE, message=FALSE}
+# explore_complete_cases <- function(honest_DEF) {
+#   # Subset the honest_DEF to include only complete cases
+#   complete_data <- honest_DEF[complete.cases(honest_DEF), ]
+#   
+#   # Loop through all numeric variables in the complete honest_DEF
+#   for (col in names(complete_data)) {
+#     if (is.numeric(complete_data[[col]])) {
+#       cat("Summary for", col, ":\n")
+#       print(summary(complete_data[[col]]))
+#       
+#       # cat("\nHistogram for", col, ":\n")
+#       # hist(complete_data[[col]], main = col)
+#       
+#       cat("\nDensity Plot for", col, ":\n")
+#       plot(density(complete_data[[col]]), main = col)
+#     }
+#   }
+# }
+# 
+# # Example usage:
+# explore_complete_cases(honest_DEF)
+
+
+# ----
+
+# Creating vector with my variables
+numerical_vars <- sapply(honest_DEF, is.numeric)
+numerical_vars <- names(numerical_vars)[numerical_vars]
+
+# Loop through numerical variables and create rain cloud plots
+for (var in numerical_vars) {
+  plot_title <- paste("Rain Cloud Plot for", var)
+  
+  # Create individual plot for each numerical variable
+  plot <- ggplot(honest_DEF, aes(x = "", y = !!sym(var))) + 
+    ggdist::stat_halfeye( # make sure that this is visualizing the raw data
+      adjust = 0.5, 
+      width = 0.6, 
+      .width = 0, 
+      justification = -0.3, 
+      point_colour = NA
+    ) + 
+    geom_boxplot(
+      width = 0.25, 
+      outlier.shape = NA
+    ) +
+    geom_point(
+      aes(y = !!sym(var)),
+      size = 1.5,
+      alpha = 0.2,
+      position = position_jitter(  # CAVE jittering 
+        seed = 1, width = 0.1
+      )
+    ) +
+    labs(title = plot_title)
+  
+  # Print or save the individual plot
+  print(plot)
+}
+
+
+```
+
+
+
+
+### Variables for nurses regression 
+
+```{r scatterplots variables, echo=FALSE, warning=FALSE, message=FALSE}
+# Subsetting honest_DEF in honest_DEF_nurse and honest_DEF_physician
+honest_DEF_nurse <- honest_DEF[, c("typologie.f", "wageFTE_nurses", "month_wageFTE_nurses", "age.mean_nurse", "pct.female_nurse", "pct.CH_nurse", "pct.RNs_etc", "pct.LPNs", "pct.n_ass", "equipment", "AMBULANTE_KONSULTATIONEN")]
+honest_DEF_physicians <- honest_DEF[, c("typologie.f", "wageFTE_physicians", "month_wageFTE_physicians","age.mean_physician", "pct.female_physician", "pct.CH_physician", "pct.chief_leading", "pct.attending_hospital", "pct.residents_students","equipment", "AMBULANTE_KONSULTATIONEN")]
+
+# Get the list of variable names (excluding the dependent variable)
+independent_vars_nurse <- names(honest_DEF_nurse)[-which(names(honest_DEF_nurse) %in% "wageFTE_nurses")]
+independent_vars_physician <- names(honest_DEF_physicians)[-which(names(honest_DEF_physicians) %in% "wageFTE_physicians")]
+
+# Create scatterplots with fitted regression lines for all variables in the nurses dataset
+for (var in independent_vars_nurse) {
+  # Create a plot for each variable
+  plot <- ggplot(honest_DEF_nurse, aes_string(x = var, y = "wageFTE_nurses")) +
+    geom_point() +
+    stat_smooth(method = "lm") +
+    labs(title = paste("Scatterplot with Fitted Regression Line for", var),
+         x = var, y = "Wage (wageFTE_nurses)")
+  
+  # Print or save the plot as needed
+  print(plot)
+}
+```
+
+
+### Variables for physicians regressions
+
+```{r scatterplots 2, echo=FALSE, warning=FALSE}
+
+
+# Create scatterplots with fitted regression lines for all variables in the physician dataset
+for (var in independent_vars_physician) {
+  # Create a plot for each variable
+  plot <- ggplot(honest_DEF_physicians, aes_string(x = var, y = "wageFTE_physicians")) +
+    geom_point() +
+    stat_smooth(method = "lm") +
+    labs(title = paste("Scatterplot with Fitted Regression Line for", var),
+         x = var, y = "Wage (wageFTE_physicians)")
+  
+  # Print or save the plot as needed
+  print(plot)
+}
+
+
+```
+
+
+## 4. Descriptive Data Analysis
+
+### Descriptive Data Analysis Nurses
+
+```{r, descriptive nurses}
+honest_DEF_nurse <- honest_DEF_nurse %>%
+  mutate(across(c(pct.female_nurse, pct.CH_nurse, pct.RNs_etc, pct.LPNs, pct.n_ass), ~ . * 100))
+
+table1::table1(~ month_wageFTE_nurses + age.mean_nurse + pct.female_nurse + pct.CH_nurse + pct.RNs_etc + pct.LPNs + pct.n_ass | typologie.f, data = honest_DEF_nurse)
+```
+
+### Descriptive Data Analysis Physicians
+
+```{r, descriptive physicians}
+honest_DEF_physicians <- honest_DEF_physicians %>%
+  mutate(across(c(pct.female_physician, pct.CH_physician, pct.chief_leading, pct.attending_hospital, pct.residents_students), ~ . * 100))
+
+table1::table1(~ month_wageFTE_physicians + age.mean_physician + pct.female_physician + pct.CH_physician + pct.chief_leading + pct.attending_hospital + pct.residents_students | typologie.f, data = honest_DEF_physicians)
+```
+
+
+
+### Descriptive Data Analysis general variables
+
+```{r, descriptive general var}
+honest_DEF <- honest_DEF %>%
+  mutate(AMBULANTE_KONSULTATIONEN = AMBULANTE_KONSULTATIONEN/1000)
+
+table1::table1(~ equipment + AMBULANTE_KONSULTATIONEN | typologie.f, data = honest_DEF)
+```
+
+
+
+

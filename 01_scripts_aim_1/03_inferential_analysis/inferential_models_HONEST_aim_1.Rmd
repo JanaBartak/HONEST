@@ -1,0 +1,367 @@
+---
+title: "MODELS_HONEST_aim_1"
+author: "Sarah Holzer"
+date: "`r Sys.Date()`"
+output:
+  html_document: 
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r load, echo=FALSE, include=FALSE}
+# Loading packages
+library(tidyverse)
+library(lme4)
+library(lmerTest)
+library(rptR)
+library(Matrix)
+library(ggplot2)
+library(ggdist)
+library(dplyr)
+library(scales)
+library(naniar)
+library(sjPlot) # table functions
+
+# Load aggregated datasets honest and honest_DEF
+load("/Volumes/research$/HONEST Team/Data/aim_1_processed_data/07_FINAL_datasets.RData")
+
+# honest contains all observations without counting for inclusion and exclusion criteria at the hospital level while honest_DEF is the final dataset the inclusion/exclusion criteria were applied.
+
+```
+
+```{r dataset preparation for EDA, echo=FALSE, include=FALSE}
+# Removing variables not needed for EDA
+honest_DEF <- honest_DEF [, -which(names(honest_DEF) %in% c("LOHN_ARZT", "LOHN_PFLEGE", "pct.male_nurse", "pct.male_physician", "pct.notCH_nurse", "pct.notCH_physician", "PFLEGETAGE_STATIONAER", "AUSTRITTE_STATIONAER"))]
+
+# Relocating equipment
+honest_DEF <- honest_DEF %>% relocate (equipment, .before = AMBULANTE_KONSULTATIONEN)
+
+# Inserting log(wage/FTE) variable in honest_DEF and reposition it near the original vars
+honest_DEF$log_wageFTE_nurses <- log(honest_DEF$wageFTE_nurses)
+honest_DEF <- honest_DEF %>% relocate (log_wageFTE_nurses, .after = wageFTE_nurses)
+
+honest_DEF$log_wageFTE_physicians <- log(honest_DEF$wageFTE_physicians)
+honest_DEF <- honest_DEF %>% relocate (log_wageFTE_physicians, .after = wageFTE_physicians)
+
+# Inserting age^2 variable in honest_DEF and reposition it near the original vars
+honest_DEF$age2.mean_nurse <- (honest_DEF$age.mean_nurse)^2
+honest_DEF <- honest_DEF %>% relocate (age2.mean_nurse, .after = age.mean_nurse)
+
+honest_DEF$age2.mean_physician <- (honest_DEF$age.mean_physician)^2
+honest_DEF <- honest_DEF %>% relocate (age2.mean_physician, .after = age.mean_physician)
+
+
+```
+
+
+```{r missing, echo=FALSE, include=FALSE }
+#### Handling Missing Values
+sapply(honest_DEF, function(x) sum(is.na(x)))
+
+```
+
+
+```{r missing equipment, echo=FALSE, include=FALSE}
+honest_DEF$BUR_ALEAT_T[which(is.na(honest_DEF$equipment))]
+honest_DEF[honest_DEF$BUR_ALEAT_T %in% c("205", "225", "73"), ]
+```
+
+
+```{r duplicates, echo=FALSE, include=FALSE}
+honest_DEF[duplicated(honest_DEF), ]
+
+```
+
+
+### Intraclass Correlation Coefficient (ICC)
+
+```{r ICC}
+
+# If ICC is higher than 0.05, there is variation between units -> Multilevel model is indicated
+# doing it with rptR function
+m1rpt<-rptGaussian(wageFTE_nurses ~ 1 + (1|BUR_ALEAT_T), grname="BUR_ALEAT_T",
+                     data=honest_DEF, nboot=500, npermut=0)
+summary(m1rpt)
+plot(m1rpt)
+
+
+# If ICC is higher than 0.05, there is variation between units -> Multilevel model is indicated
+# doing it with rptR function
+m2rpt<-rptGaussian(wageFTE_physicians ~ 1 + (1|BUR_ALEAT_T), grname="BUR_ALEAT_T",
+                   data=honest_DEF, nboot=500, npermut=0)
+summary(m2rpt)
+plot(m2rpt)
+```
+
+
+### Regression Analysis
+
+```{r variables for regression, echo=TRUE}
+
+# Variable "time" preparation
+honest_DEF$t <- NA
+honest_DEF$t[honest_DEF$JAHR == 2014] <- 1
+honest_DEF$t[honest_DEF$JAHR == 2015] <- 2
+honest_DEF$t[honest_DEF$JAHR == 2016] <- 3
+honest_DEF$t[honest_DEF$JAHR == 2017] <- 4
+honest_DEF$t[honest_DEF$JAHR == 2018] <- 5
+honest_DEF$t[honest_DEF$JAHR == 2019] <- 6
+honest_DEF$t[honest_DEF$JAHR == 2020] <- 7
+
+# change position of NEW t
+honest_DEF <- honest_DEF %>% relocate (t, .after = JAHR)
+
+# creating t^2
+honest_DEF$t_2 <- (honest_DEF$t)^2
+# change position of NEW t_2
+honest_DEF <- honest_DEF %>% relocate (t_2, .after = t)
+
+
+# Variable type_hosp2 ----
+honest_DEF$type_hosp2 <- NA
+honest_DEF$type_hosp2 [honest_DEF$typologie.f %in% "University hospital"] <- "University hospital"
+honest_DEF$type_hosp2 [honest_DEF$typologie.f %in% "Cantonal hospital"] <- "Other hospital"
+honest_DEF$type_hosp2 [honest_DEF$typologie.f %in% "Supply level 3 hospital"] <- "Other hospital"
+honest_DEF$type_hosp2 [honest_DEF$typologie.f %in% "Supply level 4 hospital"] <- "Other hospital"
+honest_DEF$type_hosp2 [honest_DEF$typologie.f %in% "Supply level 5 hospital"] <- "Other hospital"
+honest_DEF$type_hosp2 [honest_DEF$typologie.f %in% "Special clinic"] <- "Other hospital"
+honest_DEF$type_hosp2 <- factor(honest_DEF$type_hosp2, levels = c ("University hospital", "Other hospital"))
+
+# change position of type_hosp2 
+honest_DEF <- honest_DEF %>% relocate (type_hosp2, .after = typologie.f)
+
+
+# Variable type_hosp3 ----
+honest_DEF$type_hosp3 <- NA
+honest_DEF$type_hosp3 [honest_DEF$typologie.f %in% "University hospital"] <- "University hospital"
+honest_DEF$type_hosp3 [honest_DEF$typologie.f %in% "Cantonal hospital"] <- "Cantonal hospital"
+honest_DEF$type_hosp3 [honest_DEF$typologie.f %in% "Supply level 3 hospital"] <- "Other hospital"
+honest_DEF$type_hosp3 [honest_DEF$typologie.f %in% "Supply level 4 hospital"] <- "Other hospital"
+honest_DEF$type_hosp3 [honest_DEF$typologie.f %in% "Supply level 5 hospital"] <- "Other hospital"
+honest_DEF$type_hosp3 [honest_DEF$typologie.f %in% "Special clinic"] <- "Other hospital"
+honest_DEF$type_hosp3 <- factor(honest_DEF$type_hosp3, levels = c ("University hospital", "Cantonal hospital","Other hospital"))
+
+# change position of type_hosp3 
+honest_DEF <- honest_DEF %>% relocate (type_hosp3, .after = type_hosp2)
+
+
+# Rescaling pct variables (multiply *100; new scale 0-100% instead of 0-1) ----
+## All variables in once approach ----
+honest_DEF <- honest_DEF %>%
+  mutate(across(starts_with("pct."), ~ . * 100, .names = "{.col}_rescaled")) %>%
+  relocate(contains("_rescaled"), .before = starts_with("pct."))
+
+
+# Rescaling AMBULANTE_KONSULTATIONEN variables (/1000) ----
+honest_DEF$AMB_KONS_rescaled <- (honest_DEF$AMBULANTE_KONSULTATIONEN / 1000)
+honest_DEF <- honest_DEF %>% relocate (AMB_KONS_rescaled, .after = AMBULANTE_KONSULTATIONEN)
+
+
+# Rescaling wage --> wage/13 --> monthly wage
+# nurses
+honest_DEF$wageFTE_nurses_rescaled <- (honest_DEF$wageFTE_nurses) / 13
+honest_DEF <- honest_DEF %>% relocate (wageFTE_nurses_rescaled, .after = wageFTE_nurses)
+
+# physicians
+honest_DEF$wageFTE_physicians_rescaled <- (honest_DEF$wageFTE_physicians) / 13
+honest_DEF <- honest_DEF %>% relocate (wageFTE_physicians_rescaled, .after = wageFTE_physicians)
+
+
+# Rescaling wage --> wage/52 --> wkly wage
+# nurses
+honest_DEF$wageFTE_nurses_rescaled_wkly <- (honest_DEF$wageFTE_nurses) / 52
+honest_DEF <- honest_DEF %>% relocate (wageFTE_nurses_rescaled_wkly, .after = wageFTE_nurses_rescaled)
+
+# physicians
+honest_DEF$wageFTE_physicians_rescaled_wkly <- (honest_DEF$wageFTE_physicians) / 52
+honest_DEF <- honest_DEF %>% relocate (wageFTE_physicians_rescaled_wkly, .after = wageFTE_physicians_rescaled)
+
+
+# Rescaling wage --> wage/365 --> dly wage
+# nurses
+honest_DEF$wageFTE_nurses_rescaled_dly <- (honest_DEF$wageFTE_nurses) / 365
+honest_DEF <- honest_DEF %>% relocate (wageFTE_nurses_rescaled_dly, .after = wageFTE_nurses_rescaled)
+
+# physicians
+honest_DEF$wageFTE_physicians_rescaled_dly <- (honest_DEF$wageFTE_physicians) / 365
+honest_DEF <- honest_DEF %>% relocate (wageFTE_physicians_rescaled_dly, .after = wageFTE_physicians_rescaled)
+
+
+# Replacing NAs with 0 in pct.origin_dipl_CH_nurse ----
+honest_DEF <- tidyr::replace_na(honest_DEF, list(pct.origin_dipl_CH_nurse = 0, pct.origin_dipl_CH_physician = 0))
+
+```
+
+
+#### Nurses' models
+
+```{r models nurse}
+# Model nurses - from "master thesis"
+mn1 <- lmer(wageFTE_nurses ~ 1 + t + t_2 + age.mean_nurse + pct.female_nurse + pct.RNs_etc + pct.CH_nurse + AMBULANTE_KONSULTATIONEN + equipment + (1|BUR_ALEAT_T), honest_DEF, REML = TRUE)
+summary(mn1)
+plot(mn1)
+qqnorm(resid(mn1))
+qqline(resid(mn1))
+
+# Model nurses - with rescaled predictors, incl. wage physicians and hospital type as fixed effect --> because of wageFTE there is still the problem of "variables not on the same scale"
+mn2 <- lmer(wageFTE_nurses ~ 1 + t + t_2 + type_hosp2 + age.mean_nurse + pct.female_nurse_rescaled + pct.RNs_etc_rescaled + pct.CH_nurse_rescaled + AMB_KONS_rescaled + equipment + wageFTE_physicians + (1|BUR_ALEAT_T), honest_DEF, REML = TRUE)
+summary(mn2)
+plot(mn2)
+qqnorm(resid(mn2))
+qqline(resid(mn2))
+
+
+# Model nurses - with rescaled wage (daily wage)
+mn3 <- lmer(wageFTE_nurses_rescaled_dly ~ 1 + t + t_2 + type_hosp2 + age.mean_nurse + pct.female_nurse_rescaled + pct.RNs_etc_rescaled + pct.CH_nurse_rescaled + AMB_KONS_rescaled + equipment + wageFTE_physicians_rescaled_dly + (1|BUR_ALEAT_T), honest_DEF, REML = TRUE)
+summary(mn3)
+plot(mn3)
+qqnorm(resid(mn3))
+qqline(resid(mn3))
+
+
+# Model nurses - with rescaled wage (wkly wage)
+mn4 <- lmer(wageFTE_nurses_rescaled_wkly ~ 1 + t + t_2 + type_hosp2 + age.mean_nurse + pct.female_nurse_rescaled + pct.RNs_etc_rescaled + pct.CH_nurse_rescaled + AMB_KONS_rescaled + equipment + wageFTE_physicians_rescaled_wkly + (1|BUR_ALEAT_T), honest_DEF, REML = TRUE)
+summary(mn4)
+plot(mn4)
+qqnorm(resid(mn4))
+qqline(resid(mn4))
+
+# Model nurses - with monthly transformed wage
+mn5 <- lmer(wageFTE_nurses_rescaled ~ 1 + t + t_2 + type_hosp2 + age.mean_nurse + pct.female_nurse_rescaled + pct.RNs_etc_rescaled + pct.CH_nurse_rescaled + AMB_KONS_rescaled + equipment + wageFTE_physicians_rescaled + (1|BUR_ALEAT_T), honest_DEF, REML = TRUE)
+
+# model to see summary(nr.hospitaltypologie)
+# mn5test <- lmer(wageFTE_nurses_rescaled ~ 1 + t + t_2 + typologie.f + age.mean_nurse + pct.female_nurse_rescaled + pct.RNs_etc_rescaled + pct.CH_nurse_rescaled + AMB_KONS_rescaled + equipment + wageFTE_physicians_rescaled + (1|BUR_ALEAT_T), honest_DEF, REML = TRUE)
+
+summary(mn5)
+plot(mn5)
+qqnorm(resid(mn5))
+qqline(resid(mn5))
+
+
+# Model nurses - with log transformed wage
+mn6 <- lmer(log(wageFTE_nurses) ~ 1 + t + t_2 + type_hosp2 + age.mean_nurse + pct.female_nurse_rescaled + pct.RNs_etc_rescaled + pct.CH_nurse_rescaled + AMB_KONS_rescaled + equipment + log(wageFTE_physicians) + (1|BUR_ALEAT_T), honest_DEF, REML = TRUE)
+summary(mn6)
+plot(mn6)
+qqnorm(resid(mn6))
+qqline(resid(mn6))
+
+
+anova(mn1,mn2)
+anova(mn1,mn3)
+anova(mn1,mn4)
+anova(mn1,mn5)
+anova(mn1,mn6)
+anova(mn2,mn3)
+anova(mn2,mn4)
+anova(mn2,mn5)
+anova(mn2,mn6)
+anova(mn2,mn6)
+anova(mn3,mn4)
+anova(mn3,mn5)
+anova(mn3,mn6)
+anova(mn4,mn5)
+anova(mn4,mn6)
+anova(mn5,mn6)
+
+anova(mn1, mn2, mn3, mn4, mn5, mn6)
+
+```
+
+
+#### Physicians' models
+
+```{r models physicians}
+# Model physician - "from thesis"
+mp1 <- lmer(wageFTE_physicians ~ 1 + t + t_2 + age.mean_physician + pct.female_physician + pct.residents_students + pct.CH_physician + AMBULANTE_KONSULTATIONEN + equipment + (1|BUR_ALEAT_T), honest_DEF, REML = TRUE)
+summary(mp1)
+plot(mp1)
+qqnorm(resid(mp1))
+qqline(resid(mp1))
+
+# Model physician - with rescaled predictors, incl. wage nurses and hospital type as fixed effect
+mp2 <- lmer(wageFTE_physicians ~ 1 + t + t_2 + type_hosp2 + age.mean_physician + pct.female_physician_rescaled + pct.residents_students_rescaled + pct.CH_physician_rescaled + AMB_KONS_rescaled + equipment + wageFTE_nurses + (1|BUR_ALEAT_T), honest_DEF, REML = TRUE)
+summary(mp2)
+plot(mp2)
+qqnorm(resid(mp2))
+qqline(resid(mp2))
+
+
+# Model physicians - with rescaled wage (daily wage)
+mp3 <- lmer(wageFTE_physicians_rescaled_dly ~ 1 + t + t_2 + type_hosp2 + age.mean_physician + pct.female_physician_rescaled + pct.residents_students_rescaled + pct.CH_physician_rescaled + AMB_KONS_rescaled + equipment + wageFTE_nurses_rescaled_dly + (1|BUR_ALEAT_T), honest_DEF, REML = TRUE)
+summary(mp3)
+plot(mp3)
+qqnorm(resid(mp3))
+qqline(resid(mp3))
+
+
+# Model physicians - with rescaled wage (wkly wage)
+mp4 <- lmer(wageFTE_physicians_rescaled_wkly ~ 1 + t + t_2 + type_hosp2 + age.mean_physician + pct.female_physician_rescaled + pct.residents_students_rescaled + pct.CH_physician_rescaled + AMB_KONS_rescaled + equipment + wageFTE_nurses_rescaled_wkly + (1|BUR_ALEAT_T), honest_DEF, REML = TRUE)
+summary(mp4)
+plot(mp4)
+qqnorm(resid(mp4))
+qqline(resid(mp4))
+
+# Model physicians - with monthly transformed wage
+mp5 <- lmer(wageFTE_physicians_rescaled ~ 1 + t + t_2 + type_hosp2 + age.mean_physician + pct.female_physician_rescaled + pct.residents_students_rescaled + pct.CH_physician_rescaled + AMB_KONS_rescaled + equipment + wageFTE_nurses_rescaled + (1|BUR_ALEAT_T), honest_DEF, REML = TRUE)
+
+# mp5test <- lmer(wageFTE_physicians_rescaled ~ 1 + t + t_2 + typologie.f + age.mean_physician + pct.female_physician_rescaled + pct.residents_students_rescaled + pct.CH_physician_rescaled + AMB_KONS_rescaled + equipment + wageFTE_nurses_rescaled + (1|BUR_ALEAT_T), honest_DEF, REML = TRUE)
+
+summary(mp5)
+plot(mp5)
+qqnorm(resid(mp5))
+qqline(resid(mp5))
+
+# Model physicians - with log transformed wage
+mp6 <- lmer(log_wageFTE_physicians ~ 1 + t + t_2 + type_hosp2 + age.mean_physician + pct.female_physician_rescaled + pct.residents_students_rescaled + pct.CH_physician_rescaled + AMB_KONS_rescaled + equipment + log_wageFTE_nurses + (1|BUR_ALEAT_T), honest_DEF, REML = TRUE)
+summary(mp6)
+plot(mp6)
+qqnorm(resid(mp6))
+qqline(resid(mp6))
+
+
+
+
+
+anova(mp1,mp2)
+anova(mp1,mp3)
+anova(mp1,mp4)
+anova(mp1,mp5)
+anova(mp1,mp6)
+anova(mp2,mp3)
+anova(mp2,mp4)
+anova(mp2,mp5)
+anova(mp2,mp6)
+anova(mp2,mp6)
+anova(mp3,mp4)
+anova(mp3,mp5)
+anova(mp3,mp6)
+anova(mp4,mp5)
+anova(mp4,mp6)
+anova(mp5,mp6)
+
+anova(mp1, mp2, mp3, mp4, mp5, mp6)
+
+```
+### Overview Models Nurses
+
+``` {r table model N, echo=FALSE}
+tab_model(mn1, mn2, mn3, mn4, mn5, mn6, dv.labels = c("mn1 = thesis model", "mn2 = rescaled predictors", "mn3 = rescaled pred. + dly wage", "mn4 = rescaled pred. + wkly wage", "mn5 = rescaled pred. + month. wage", "mn6 = rescaled pred. + log(wage)"), title = "Models Nurses")
+```
+
+
+### Overview Models Physicians
+``` {r table model P, echo=FALSE}
+tab_model(mp1, mp2, mp3, mp4, mp5, mp6, dv.labels = c("mp1 = thesis model", "mp2 = rescaled predictors", "mp3 = rescaled pred. + dly wage", "mp4 = rescaled pred. + wkly wage", "mp5 = rescaled pred. + month. wage", "mp6 = rescaled pred. + log(wage)"), title = "Models Physicians")
+```
+
+### Model of choice nurses and physicians
+``` {r table model tot, echo=FALSE}
+tab_model(mn5, mp5, dv.labels = c("Nurses model = rescaled pred. + month. wage", "Physicians model = rescaled pred. + month. wage"), title = "Models HONEST aim1")
+```
+
+### Model log nurses and physicians
+``` {r table model sens, echo=FALSE}
+tab_model(mn6, mp6, dv.labels = c("Nurses model = rescaled pred. + log wage", "Physicians model = rescaled pred. + log wage"), title = "Models HONEST aim1 sensitivity analysis")
+```
