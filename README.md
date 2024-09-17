@@ -1,18 +1,21 @@
----
-title: "README"
-author: " "
-date: "`r Sys.Date()`"
-output: html_document
----
+This folder was set up by Jana Bartakova.
 
 #### Authors
 Sarah Holzer, MSc Nursing Science
 
 Aleksandra Vasic, Msc Nursing Science
 
-Prof. Dr. Michael Simon, PhD
+Prof. Dr. Michael Simon, PhD (PI)
 
 Dr. Jana Bartakova, PhD, Health Economist (PI)
+
+#### Contact information
+* Universität Basel
+* Medizinische Fakultät | Department of Public Health (DPH)
+* Bernoullistrasse 28
+* CH-4056 Basel
+* Schweiz
+* jana.bartakova@unibas.ch
 
 #### HONEST
 HONEST is a research project funded by European Uninon’s Marie Skłodowska-Curie Actions Programme. The HONEST project aims to facilitate the Swiss hospitals’ staff budget transparency and optimize investments in health systems through a better understanding of the association between nurse and physician wages and patient safety outcomes.
@@ -40,6 +43,41 @@ In this retrospective observational time series cross-sectional study based on d
 #### Aim 3
 
 
+FOLDERS/DIRECTORIES
+-------------------
+
+* scripts aim 1: https://github.com/JanaBartak/HONEST/tree/main/01_scripts_aim_1/01_data_cleaning 
+* script aim 2:
+* script aim 3:
+
+* descriptive analysis aim 1:https://github.com/JanaBartak/HONEST/tree/main/01_scripts_aim_1/02_descriptive_analysis
+* descriptive analysis aim 2:
+* descriptive analysis aim 3:
+
+* inferential analysis aim 1: https://github.com/JanaBartak/HONEST/tree/main/01_scripts_aim_1/03_inferential_analysis
+* inferential analysis aim 2:
+* inferential analysis aim 3:
+
+
+ FOLDER OVERVIEW
+ -------------
+
+Main folder HONEST
+	01_scripts_aim_1
+ 		01_data_cleaning
+   		02_descriptive_analysis
+     		03_inferential_analysis
+       02_scripts_aim_2
+ 		01_data_cleaning
+   		02_descriptive_analysis
+     		03_inferential_analysis
+       HONEST.Rproj
+       README.md
+
+
+ WORKING WITHIN THIS PROJECT
+ ---------------------------
+
 ### Get started
 These instructions will help you set up the project on your local machine.
 
@@ -52,7 +90,7 @@ Softwares that need to be installed:
 2. Install required packages using 'install.packages("package_name")
 
 #### Aim 1
-1. Run the project using following R scripts:
+1. Run the cleaning using following R scripts:
 	- 00_load_raw_data.R
 	- 01_handling_missing_values_and_recoding.R
 	- 02_create_new_variables.R
