@@ -1,4 +1,4 @@
-This folder was set up by Jana Bartakova.
+This folder was set up by Jana Bartakova on September 2024 as a clean copy from a repository created on August 2022.
 
 AUTHORS
 -------
