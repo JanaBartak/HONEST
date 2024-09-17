@@ -1,5 +1,67 @@
-.Rproj.user
-.Rhistory
-.RData
-.Ruserdata
-.DS_Store
+*.Rproj.user
+*.Rhistory
+*.RData
+*.Ruserdata
+*.DS_Store
+
+# Ignore PDF files
+*.pdf
+
+# Ignore Excel files
+*.xls
+*.xlsx
+*.xlsm
+
+# Ignore HTML files
+*.html
+*.htm
+
+# Ignore image files
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+*.tiff
+*.svg
+
+# Ignore video files
+*.mp4
+*.avi
+*.mov
+*.wmv
+*.mkv
+*.flv
+*.webm
+
+# Ignore audio files
+*.mp3
+*.wav
+*.flac
+*.aac
+*.ogg
+
+# Ignore compressed files
+*.zip
+*.tar
+*.gz
+*.rar
+*.7z
+*.bz2
+
+# Ignore large document formats
+*.doc
+*.docx
+*.ppt
+*.pptx
+
+# Ignore other binary files
+*.exe
+*.dll
+*.iso
+*.bin
+
+# Ignore temporary files
+*.tmp
+*.log
+*.bak
