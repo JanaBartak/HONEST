@@ -48,7 +48,7 @@ Softwares that need to be installed:
 - R Software (we used R version 4.3.2 (2023-10-31) -- "Eye Holes")
 
 #### Installing
-1. Clone the repository https://github.com/...
+1. Clone the repository https://github.com/JanaBartak/HONEST.git
 2. Install required packages using 'install.packages("package_name")
 
 #### Aim 1
