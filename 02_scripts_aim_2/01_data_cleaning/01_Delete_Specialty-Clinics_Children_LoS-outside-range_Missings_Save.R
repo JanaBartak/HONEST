@@ -114,28 +114,28 @@ New.Med.2018 = New.Med.2018 %>% rename(Year = X_0_0_V01,
 
 
 # 4. Delete Specialty Clinics / Keep only K1 clinics ----
-## K1 2020 (- 255'102 cases) ----
+## K1 2020 ----
 New.Med.K1.2020 <- New.Med.2020[!(New.Med.2020$Hosp.Typo %in% 
                                     c("K123", "K211", "K212", "K221","K231", 
                                       "K232", "K233", "K234", "K235")), ]
 
-## K1 2019 (- 262'310 cases) ----
+## K1 2019 ----
 New.Med.K1.2019 <- New.Med.2019[!(New.Med.2019$Hosp.Typo %in% 
                                     c("K123", "K211", "K212", "K221","K231", 
                                       "K232", "K233", "K234", "K235")), ]
 
-## K1 2018 (- 265'989 cases) ----
+## K1 2018 ----
 New.Med.K1.2018 <- New.Med.2018[!(New.Med.2018$Hosp.Typo %in% 
                                     c("K123", "K211", "K212", "K221","K231", 
                                       "K232", "K233", "K234", "K235")), ]
 
 
 # 5. Delete Children / Keep only K1 & Adults ----
-## 2020 (- 144'766 cases)
+## 2020
 New.Med.K1.Adult.2020 <- New.Med.K1.2020[!(New.Med.K1.2020$Age.Gr.5yrs %in% 
                                              c("0-4", "5-9", "10-14", "15-19")), ]
 
-## 2019 (- 157'482 cases)
+## 2019
 New.Med.K1.Adult.2019 <- New.Med.K1.2019[!(New.Med.K1.2019$Age.Gr.5yrs %in% 
                                              c("0-4", "5-9", "10-14", "15-19")), ]
 
@@ -145,7 +145,7 @@ New.Med.K1.Adult.2018 <- New.Med.K1.2018[!(New.Med.K1.2018$Age.Gr.5yrs %in%
 
 
 # 6. Delete LoS >/= 365 days (missings are included) ----
-## 2020 CAVE odd year --> limit 366 days (- 1'453 cases) ----
+## 2020 CAVE odd year --> limit 366 days ----
 New.Med.K1.Adult.2020.365.NA <- New.Med.K1.Adult.2020[((is.na(New.Med.K1.Adult.2020$LoS.DRG) | 
                                                           (New.Med.K1.Adult.2020$LoS.DRG > 0 & 
                                                              New.Med.K1.Adult.2020$LoS.DRG < 367))), ]
@@ -159,7 +159,7 @@ New.Med.K1.Adult.2020 %>%
   filter(!is.na(LoS.DRG) & LoS.DRG == 0) %>%
   nrow()
 
-## 2019 (- 1'042 cases) ----
+## 2019  ----
 New.Med.K1.Adult.2019.365.NA <- New.Med.K1.Adult.2019[((is.na(New.Med.K1.Adult.2019$LoS.DRG) | 
                                                           (New.Med.K1.Adult.2019$LoS.DRG > 0 & 
                                                              New.Med.K1.Adult.2019$LoS.DRG < 366))), ]
@@ -173,7 +173,7 @@ New.Med.K1.Adult.2019 %>%
   filter(!is.na(LoS.DRG) & LoS.DRG == 0) %>%
   nrow()
 
-## 2018 (- 785 cases) ----
+## 2018  ----
 New.Med.K1.Adult.2018.365.NA <- New.Med.K1.Adult.2018[((is.na(New.Med.K1.Adult.2018$LoS.DRG) | 
                                                           (New.Med.K1.Adult.2018$LoS.DRG > 0 & 
                                                              New.Med.K1.Adult.2018$LoS.DRG < 366))), ]

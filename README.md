@@ -75,18 +75,18 @@ Main folder HONEST
 	01_scripts_aim_1
  
  		01_data_cleaning
-   
-   	02_descriptive_analysis
-     
-    03_inferential_analysis
+ 		
+ 		02_descriptive_analysis
+ 		
+ 		03_inferential_analysis
        
   02_scripts_aim_2
        
  		01_data_cleaning
-   
-   	02_descriptive_analysis
-     
-    03_inferential_analysis
+ 		
+ 		02_descriptive_analysis
+ 		
+ 		03_inferential_analysis
        
   HONEST.Rproj
        

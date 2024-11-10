@@ -49,7 +49,7 @@ honest_DEF = honest_DEF %>% rename(Hosp.Level2 = typologie.f,
 table(honest_DEF$Hosp.Level2, useNA = "always") # no NA's
 table(honest_DEF$BUR.NR, useNA = "always") # no NA's
 
-table(honest_DEF$JAHR, useNA = "always") # no NA's, 2020 n = 126, 2019 n = 135, 2018 n = 132
+table(honest_DEF$JAHR, useNA = "always") # no NA's
 
 # 3. Make subsets for 2020, 2019, 2018 ----
 ## 2020 ----
@@ -123,12 +123,12 @@ sort(unique(New.Sub1.2018.365$BUR.NR)) # numbers are the same --> correct
 sort(unique(New.Hosp.K1.2020$BUR.NR))
 sort(unique(New.Sub1.2020.365$BUR.NR))
 
-### following BUR.NR do not exist in the hospital data: 5x Hosp.L.4 --> 22'570 cases
-BUR18 <- New.Sub1.2020.365 %>% filter(BUR.NR == 18) # Hosp.L.4 --> 4144 cases
-BUR69 <- New.Sub1.2020.365 %>% filter(BUR.NR == 69) # Hosp.L.4 --> 4382 cases
-BUR251 <- New.Sub1.2020.365 %>% filter(BUR.NR == 251) # Hosp.L.4 --> 3583 cases
-BUR388 <- New.Sub1.2020.365 %>% filter(BUR.NR == 388) # Hosp.L.4 --> 4877 cases
-BUR522 <- New.Sub1.2020.365 %>% filter(BUR.NR == 522) # Hosp.L.4 --> 5584 cases
+### following BUR.NR do not exist in the hospital data: 5x Hosp.L.4 
+BUR18 <- New.Sub1.2020.365 %>% filter(BUR.NR == 18) # Hosp.L.4 
+BUR69 <- New.Sub1.2020.365 %>% filter(BUR.NR == 69) # Hosp.L.4 
+BUR251 <- New.Sub1.2020.365 %>% filter(BUR.NR == 251) # Hosp.L.4 
+BUR388 <- New.Sub1.2020.365 %>% filter(BUR.NR == 388) # Hosp.L.4 
+BUR522 <- New.Sub1.2020.365 %>% filter(BUR.NR == 522) # Hosp.L.4 
 
 #### remove subsets
 rm(BUR18, BUR69, BUR251, BUR388, BUR522)
@@ -137,12 +137,12 @@ rm(BUR18, BUR69, BUR251, BUR388, BUR522)
 sort(unique(New.Hosp.K1.2019$BUR.NR))
 sort(unique(New.Sub1.2019.365$BUR.NR))
 
-### following BUR.NR do not exist in the hospital data: 5x Hosp.L.4 --> 22'074 cases
-BUR18 <- New.Sub1.2019.365 %>% filter(BUR.NR == 18) # Hosp.L.4 --> 4332 cases
-BUR69 <- New.Sub1.2019.365 %>% filter(BUR.NR == 69) # Hosp.L.4 --> 4247 cases
-BUR251 <- New.Sub1.2019.365 %>% filter(BUR.NR == 251) # Hosp.L.4 --> 3652 cases
-BUR388 <- New.Sub1.2019.365 %>% filter(BUR.NR == 388) # Hosp.L.4 --> 4706 cases
-BUR522 <- New.Sub1.2019.365 %>% filter(BUR.NR == 522) # Hosp.L.4 --> 5137 cases
+### following BUR.NR do not exist in the hospital data: 5x Hosp.L.4 
+BUR18 <- New.Sub1.2019.365 %>% filter(BUR.NR == 18) # Hosp.L.4 
+BUR69 <- New.Sub1.2019.365 %>% filter(BUR.NR == 69) # Hosp.L.4 
+BUR251 <- New.Sub1.2019.365 %>% filter(BUR.NR == 251) # Hosp.L.4 
+BUR388 <- New.Sub1.2019.365 %>% filter(BUR.NR == 388) # Hosp.L.4 
+BUR522 <- New.Sub1.2019.365 %>% filter(BUR.NR == 522) # Hosp.L.4 
 
 #### remove subsets
 rm(BUR18, BUR69, BUR251, BUR388, BUR522)
@@ -151,12 +151,12 @@ rm(BUR18, BUR69, BUR251, BUR388, BUR522)
 sort(unique(New.Hosp.K1.2018$BUR.NR))
 sort(unique(New.Sub1.2018.365$BUR.NR))
 
-### following BUR.NR do not exist in the hospital data: 4x Hosp.L.4, 1x Hosp.L3 --> 22'076 cases
-BUR18 <- New.Sub1.2018.365 %>% filter(BUR.NR == 18) # Hosp.L.4 --> 4373 cases
-BUR69 <- New.Sub1.2018.365 %>% filter(BUR.NR == 69) # Hosp.L.3 --> 4364 cases
-BUR251 <- New.Sub1.2018.365 %>% filter(BUR.NR == 251) # Hosp.L.4 --> 3269 cases
-BUR388 <- New.Sub1.2018.365 %>% filter(BUR.NR == 388) # Hosp.L.4 --> 4997 cases
-BUR522 <- New.Sub1.2018.365 %>% filter(BUR.NR == 522) # Hosp.L.4 --> 5073 cases
+### following BUR.NR do not exist in the hospital data: 4x Hosp.L.4, 1x Hosp.L3 
+BUR18 <- New.Sub1.2018.365 %>% filter(BUR.NR == 18) # Hosp.L.4 
+BUR69 <- New.Sub1.2018.365 %>% filter(BUR.NR == 69) # Hosp.L.3 
+BUR251 <- New.Sub1.2018.365 %>% filter(BUR.NR == 251) # Hosp.L.4 
+BUR388 <- New.Sub1.2018.365 %>% filter(BUR.NR == 388) # Hosp.L.4 
+BUR522 <- New.Sub1.2018.365 %>% filter(BUR.NR == 522) # Hosp.L.4 
 
 #### remove subsets
 rm(BUR18, BUR69, BUR251, BUR388, BUR522)
@@ -166,17 +166,17 @@ rm(BUR18, BUR69, BUR251, BUR388, BUR522)
 ## 2020 ----
 New.Merged.2020 <- inner_join(New.Sub1.2020.365, New.Hosp.K1.2020, by = "BUR.NR")
 sort(unique(New.Merged.2020$BUR.NR))
-### --> -22'570 cases correct; 83 hospitals correct
+
 
 ## 2019 ----
 New.Merged.2019 <- inner_join(New.Sub1.2019.365, New.Hosp.K1.2019, by = "BUR.NR")
 sort(unique(New.Merged.2019$BUR.NR))
-### --> -22'074 cases correct; 82 hospitals correct
+
 
 ## 2018 ----
 New.Merged.2018 <- inner_join(New.Sub1.2018.365, New.Hosp.K1.2018, by = "BUR.NR")
 sort(unique(New.Merged.2018$BUR.NR))
-### --> -22'076 cases correct; 81 hospitals correct
+
 
 
 # 10. Save New.Merged datasets (please do not execute!) ----
