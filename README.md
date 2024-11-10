@@ -76,17 +76,17 @@ Main folder HONEST
  
  		01_data_cleaning
    
-   		02_descriptive_analysis
+   	02_descriptive_analysis
      
-     		03_inferential_analysis
+    03_inferential_analysis
        
   02_scripts_aim_2
        
  		01_data_cleaning
    
-   		02_descriptive_analysis
+   	02_descriptive_analysis
      
-     		03_inferential_analysis
+    03_inferential_analysis
        
   HONEST.Rproj
        
@@ -136,6 +136,8 @@ You will find details on how to run each script at the beginning of the scripts.
 	- 02a_Table_One_Hospitals.R
 	- 02b_Table-One_Empl-absolute-numbers.R
 	
+3. Run the inferential analysis using following RMD script:
+	- inferential_models_HONEST_aim_2.RMD
 	
 You will find details on how to run each script at the beginning of the scripts.
 
