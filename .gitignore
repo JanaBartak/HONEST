@@ -65,3 +65,4 @@
 *.tmp
 *.log
 *.bak
+.Rproj.user
