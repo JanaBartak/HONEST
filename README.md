@@ -55,15 +55,15 @@ FOLDERS/DIRECTORIES
 -------------------
 
 * scripts aim 1: https://github.com/JanaBartak/HONEST/tree/main/01_scripts_aim_1/01_data_cleaning 
-* script aim 2:
-* script aim 3:
+* scripts aim 2: https://github.com/JanaBartak/HONEST/tree/main/02_scripts_aim_2/01_data_cleaning
+* scripts aim 3:
 
-* descriptive analysis aim 1:https://github.com/JanaBartak/HONEST/tree/main/01_scripts_aim_1/02_descriptive_analysis
-* descriptive analysis aim 2:
+* descriptive analysis aim 1: https://github.com/JanaBartak/HONEST/tree/main/01_scripts_aim_1/02_descriptive_analysis
+* descriptive analysis aim 2: https://github.com/JanaBartak/HONEST/tree/main/02_scripts_aim_2/02_descriptive_analysis
 * descriptive analysis aim 3:
 
 * inferential analysis aim 1: https://github.com/JanaBartak/HONEST/tree/main/01_scripts_aim_1/03_inferential_analysis
-* inferential analysis aim 2:
+* inferential analysis aim 2: https://github.com/JanaBartak/HONEST/tree/main/02_scripts_aim_2/03_inferential_analysis
 * inferential analysis aim 3:
 
 
@@ -80,7 +80,7 @@ Main folder HONEST
      
      		03_inferential_analysis
        
-       02_scripts_aim_2
+  02_scripts_aim_2
        
  		01_data_cleaning
    
@@ -88,9 +88,9 @@ Main folder HONEST
      
      		03_inferential_analysis
        
-       HONEST.Rproj
+  HONEST.Rproj
        
-       README.md
+  README.md
 
 
  WORKING WITHIN THIS PROJECT
@@ -120,6 +120,24 @@ Softwares that need to be installed:
 You will find details on how to run each script at the beginning of the scripts. 
 
 #### Aim 2
+1. Run the cleaning using following R scripts:
+- Open: Data-Cleaning.Rproj
+	- 00_Load_Save_Raw_New_Data.R
+	- 01_Delete_Specialty-Clinics_Children_LoS-outside-range_Missings_Save.R
+	- 02_Create-Elix_Mort-Save.R
+	- 03_data_selection.R
+	- 03_Merge-with_ICD_Hosp-data.R
+	- 04_Prepare-New-Hosp-dat.R
+	- 05_Subset-Hosp_Merge-Patient-Hosp.R
+	
+2. Run the descriptive analysis using following R scripts:
+- Open: Descriptive-Analysis.Rproj
+	- 01_Table-One_Patients.R
+	- 02a_Table_One_Hospitals.R
+	- 02b_Table-One_Empl-absolute-numbers.R
+	
+	
+You will find details on how to run each script at the beginning of the scripts.
 
 #### Aim 3
 
