@@ -84,7 +84,7 @@ Main folder HONEST
  		
  		03_inferential_analysis
        
-  02_scripts_aim_2
+  	02_scripts_aim_2
        
  		01_data_cleaning
  		
