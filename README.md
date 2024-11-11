@@ -54,9 +54,13 @@ In this retrospective observational time series cross-sectional study based on d
 FOLDERS/DIRECTORIES
 -------------------
 
-* scripts aim 1: https://github.com/JanaBartak/HONEST/tree/main/01_scripts_aim_1/01_data_cleaning 
-* scripts aim 2: https://github.com/JanaBartak/HONEST/tree/main/02_scripts_aim_2/01_data_cleaning
+* scripts aim 1: https://github.com/JanaBartak/HONEST/tree/main/01_scripts_aim_1/
+* scripts aim 2: https://github.com/JanaBartak/HONEST/tree/main/02_scripts_aim_2/
 * scripts aim 3:
+
+* data cleaning aim 1: https://github.com/JanaBartak/HONEST/tree/main/01_scripts_aim_1/01_data_cleaning 
+* data cleaning aim 2: https://github.com/JanaBartak/HONEST/tree/main/02_scripts_aim_2/01_data_cleaning
+* data cleaning aim 3:
 
 * descriptive analysis aim 1: https://github.com/JanaBartak/HONEST/tree/main/01_scripts_aim_1/02_descriptive_analysis
 * descriptive analysis aim 2: https://github.com/JanaBartak/HONEST/tree/main/02_scripts_aim_2/02_descriptive_analysis
