@@ -8,7 +8,7 @@ Aleksandra Vasic, Msc Nursing Science
 
 Prof. Dr. Michael Simon, PhD (PI)
 
-Dr. Jana Bartakova, PhD, Health Economist (PI)
+MEng. BSc. Jana Bartáková PhD, Health Economist (PI)
 
 CONTACT INFORMATION
 -------------------
