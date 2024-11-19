@@ -1,4 +1,40 @@
-[
+{
+  "file_name": "METADATA HONEST Project aim 1",
+  "description": "Cross-sectional data of the years 2014-2020, collected each year.",
+  "datasets": [
+    {
+      "name": "typo_ks_allg_2014-2020.csv",
+      "observations": 1979,
+      "variables": 159
+    },
+    {
+      "name": "typo_ks_leistungen_2014-2020.csv",
+      "observations": 2471,
+      "variables": 11
+    },
+    {
+      "name": "typo_ks_fibu_2014-2020.csv",
+      "observations": 1979,
+      "variables": 19
+    },
+    {
+      "name": "typo_ks_personal_2014-2020.csv",
+      "observations": 1876422,
+      "variables": 22
+    },
+    {
+      "Dataset": "DET_KS_ALLG",
+      "Fragebogen": null,
+      "Variable": 1,
+      "Name": "JAHR*",
+      "Format": null,
+      "BeschreibungD": null,
+      "DescriptionF": null,
+      "Gültigab": null,
+      "Gültigbis": null
+    }
+  ]
+  [
     {
         "Dataset": "DET_KS_ALLG",
         "Fragebogen": null,
@@ -3310,4 +3346,6 @@
         "Gültigab": null,
         "Gültigbis": null
     }
-]
+  ]
+
+}
