@@ -15,7 +15,7 @@ library(sjPlot)
 
 # Set Work Directory & load merged data ----
 setwd("/Volumes/research$/HONEST Team/Data/aim2_processed-data/aim2_new-merged-data/")
-load("New.Merged.FTE.Data.RData")
+load("New.Merged.Data.RData")
 
 ## use this in the codes to speed running the analysis
 cl <- makeCluster(20)
@@ -25,31 +25,31 @@ cl <- makeCluster(20)
 ```{r echo=TRUE}
 # Nurses
 ## 2020
-New.Merged.FTE.2020$w_n_FTE_10000 <- New.Merged.FTE.2020$wageFTE_nurses/10000
+New.Merged.2020$w_n_FTE_10000 <- New.Merged.2020$wageFTE_nurses/10000
 
 ## 2019
-New.Merged.FTE.2019$w_n_FTE_10000 <- New.Merged.FTE.2019$wageFTE_nurses/10000
+New.Merged.2019$w_n_FTE_10000 <- New.Merged.2019$wageFTE_nurses/10000
 
 ## 2018
-New.Merged.FTE.2018$w_n_FTE_10000 <- New.Merged.FTE.2018$wageFTE_nurses/10000
+New.Merged.2018$w_n_FTE_10000 <- New.Merged.2018$wageFTE_nurses/10000
 
 
 # Physicians
 ## 2020
-New.Merged.FTE.2020$w_p_FTE_10000 <- New.Merged.FTE.2020$wageFTE_physicians/10000
+New.Merged.2020$w_p_FTE_10000 <- New.Merged.2020$wageFTE_physicians/10000
 
 ## 2019
-New.Merged.FTE.2019$w_p_FTE_10000 <- New.Merged.FTE.2019$wageFTE_physicians/10000
+New.Merged.2019$w_p_FTE_10000 <- New.Merged.2019$wageFTE_physicians/10000
 
 ## 2018
-New.Merged.FTE.2018$w_p_FTE_10000 <- New.Merged.FTE.2018$wageFTE_physicians/10000
+New.Merged.2018$w_p_FTE_10000 <- New.Merged.2018$wageFTE_physicians/10000
 ```
 
 # Inferential Analysis + OR table 2019
 ```{r echo=TRUE}
 a19 <- bam(Mort.numeric ~ w_n_FTE_10000 + w_p_FTE_10000 +
              Age.Gr.5yrs + Sex + Swiss_eci.19 + s(BUR.NR, bs="re"), 
-           data = New.Merged.FTE.2019, family="binomial", cluster = cl)
+           data = New.Merged.2019, family="binomial", cluster = cl)
 summary(a19)
 ```
 
@@ -62,7 +62,7 @@ tab_model(a19, show.aic = TRUE, show.dev = TRUE)
 ```{r echo=TRUE}
 a18 <- bam(Mort.numeric ~ w_n_FTE_10000 + w_p_FTE_10000 +
              Age.Gr.5yrs + Sex + Swiss_eci.18 + s(BUR.NR, bs="re"), 
-           data = New.Merged.FTE.2018, family="binomial")
+           data = New.Merged.2018, family="binomial")
 summary(a18)
 ```
 
@@ -73,7 +73,7 @@ tab_model(a18, show.aic = TRUE, show.dev = TRUE)
 ```{r echo=TRUE}
 a20 <- bam(Mort.numeric ~ w_n_FTE_10000 + w_p_FTE_10000 +
              Age.Gr.5yrs + Sex + Swiss_eci.20 + s(BUR.NR, bs="re"), 
-           data = New.Merged.FTE.2020, family="binomial", cluster = cl)
+           data = New.Merged.2020, family="binomial", cluster = cl)
 summary(a20)
 ```
 
