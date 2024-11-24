@@ -1,6 +1,10 @@
 ###############################################################################
 # In this file, ICD codes will be merged into the new dataset from script 02_ 
 # and new variables will be created:
+# NOTE: Loading and merging the ICD codes (steps 3 &4) was only executed for
+# data exploration reasons. These steps were not necessary for this study and were 
+# not further used. The codes are kept, as the subsequent steps continued on the
+# datasets that included this data.
 # NOTE: If you run the codes, please DO NOT execute step 6 (saving)
 # 0. Install/load Packages
 # 1. Set Work Directory

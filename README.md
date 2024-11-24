@@ -34,7 +34,7 @@ Nurses’ and physicians’ wages drivers in Swiss hospitals: a retrospective ob
 
 #### Aim 2: 
 
-Nexus of nurses' and physicians' wages and patient safety outcomes in acute care settings: a cross-sectional study using routine data
+Nexus of nurses' and physicians' wages and mortality in acute care settings: a cross-sectional study using routine data
 
 #### Aim 3: 
 
@@ -47,6 +47,7 @@ DESCRIPTION OF SUBSTUDIES
 In this retrospective observational time series cross-sectional study based on de-identified data regularly collected by the Federal Statistical Office (BFS) which comprises information on Swiss acute care and specialized hospitals, as well as on staff (including nurses and physicians) employed in these hospitals from 2014 to 2020. After data cleaning and preparation, we conducted descriptive analysis. Eventually, we ran different regression models to determine the factors affecting wages for nurses and physicians.
 
 #### Aim 2
+In this cross-sectional study we used Swiss patient and hospital routine data from the year 2019, which we linked by matching the anonymized hospital identification number. After cleaning the data, we conducted descriptive analyses. For the inferential analysis we used the Generalized Additive Mixed Model (GAMM) to explore the association between nurse and physician wages aggregated at hospital level, and all-cause 30-day mortality. Sensitivity analyses were conducted by applying the same procedures to the data from 2018 and 2020.
 
 #### Aim 3
 
