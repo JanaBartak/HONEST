@@ -2,13 +2,13 @@ This folder was set up by Jana Bartakova on September 2024 as a clean copy from 
 
 AUTHORS
 -------
+MEng. BSc. Jana Bartáková PhD, Health Economist (PI, Projec Leader and Fellow)
+
+Prof. Dr. Michael Simon, PhD (Advisor)
+
 Sarah Holzer, MSc Nursing Science
 
-Aleksandra Vasic, Msc Nursing Science
-
-Prof. Dr. Michael Simon, PhD (PI)
-
-MEng. BSc. Jana Bartáková PhD, Health Economist (PI)
+Aleksandra Vasic, MSc Nursing Science
 
 CONTACT INFORMATION
 -------------------
@@ -79,19 +79,19 @@ Main folder HONEST
 
 	01_scripts_aim_1
  
- 		01_data_cleaning
+ 		11_data_cleaning
  		
- 		02_descriptive_analysis
+ 		12_descriptive_analysis
  		
- 		03_inferential_analysis
+ 		13_inferential_analysis
        
   	02_scripts_aim_2
        
- 		01_data_cleaning
+ 		21_data_cleaning
  		
- 		02_descriptive_analysis
+ 		22_descriptive_analysis
  		
- 		03_inferential_analysis
+ 		23_inferential_analysis
        
   HONEST.Rproj
        
@@ -125,7 +125,8 @@ Softwares that need to be installed:
 You will find details on how to run each script at the beginning of the scripts. 
 
 #### Aim 2
-1. Run the cleaning using following R scripts:
+1. Refer to the codebook "Codebook_HONEST-aim2.pdf" at: 
+2. Run the cleaning using following R scripts:
 - Open: Data-Cleaning.Rproj
 	- 00_Load_Save_Raw_New_Data.R
 	- 01_Delete_Specialty-Clinics_Children_LoS-outside-range_Missings_Save.R
@@ -135,13 +136,13 @@ You will find details on how to run each script at the beginning of the scripts.
 	- 04_Prepare-New-Hosp-dat.R
 	- 05_Subset-Hosp_Merge-Patient-Hosp.R
 	
-2. Run the descriptive analysis using following R scripts:
+3. Run the descriptive analysis using following R scripts:
 - Open: Descriptive-Analysis.Rproj
 	- 01_Table-One_Patients.R
 	- 02a_Table_One_Hospitals.R
 	- 02b_Table-One_Empl-absolute-numbers.R
 	
-3. Run the inferential analysis using following RMD script:
+4. Run the inferential analysis using following RMD script:
 	- inferential_models_HONEST_aim_2.RMD
 	
 You will find details on how to run each script at the beginning of the scripts.
