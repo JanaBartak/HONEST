@@ -125,7 +125,7 @@ Softwares that need to be installed:
 You will find details on how to run each script at the beginning of the scripts. 
 
 #### Aim 2
-1. Refer to the codebook "Codebook_HONEST-aim2.pdf" at: 
+1. Refer to the codebook "Codebook_HONEST-aim2.pdf" at: https://github.com/JanaBartak/HONEST/tree/main/02_scripts_aim_2
 2. Run the cleaning using following R scripts:
 - Open: Data-Cleaning.Rproj
 	- 00_Load_Save_Raw_New_Data.R
