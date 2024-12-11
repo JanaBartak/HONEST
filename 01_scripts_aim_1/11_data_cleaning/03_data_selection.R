@@ -23,7 +23,7 @@
 ###############################################################################
 
 # 0. Set work directory ----
-setwd("/Volumes/research$/HONEST Team/Data/aim_1_processed-data/")
+setwd("/Volumes/research$/HONEST Team/Data/aim_1_processed_data//")
 
 # 1. Load data ----
 load("02_new_variables.RData")

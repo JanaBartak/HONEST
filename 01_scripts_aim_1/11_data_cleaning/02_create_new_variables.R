@@ -11,7 +11,7 @@
 ###############################################################################
 
 # 0. Set work directory ----
-setwd("/Volumes/research$/HONEST Team/Data/aim_1_processed-data/")
+setwd("/Volumes/research$/HONEST Team/Data/aim_1_processed_data/")
 
 # 1. Load data ----
 load("01_clean_raw_data.RData")
@@ -94,8 +94,41 @@ allg$RECHTSFORM.f [allg$RECHTSFORM %in% "34"] <- "Öffentliche Unternehmen einer
 allg$RECHTSFORM.f <- as.factor(allg$RECHTSFORM.f)
 
 
-# change position of NEW RECHTSFORM.f
-allg <- allg %>% relocate (RECHTSFORM.f, .before  = ERSTE_ERHEBUNG)
+### NEW rechtsform_agg.f ----
+# changing numbers into meaningful names
+  allg$rechtsform_agg.f <- NA
+allg$rechtsform_agg.f [allg$RECHTSFORM %in% "1"] <- "Privatrechtlich"
+allg$rechtsform_agg.f [allg$RECHTSFORM %in% "2"] <- "Privatrechtlich"
+allg$rechtsform_agg.f [allg$RECHTSFORM %in% "3"] <- "Privatrechtlich"
+allg$rechtsform_agg.f [allg$RECHTSFORM %in% "4"] <- "Privatrechtlich"
+allg$rechtsform_agg.f [allg$RECHTSFORM %in% "5"] <- "Privatrechtlich"
+allg$rechtsform_agg.f [allg$RECHTSFORM %in% "6"] <- "Privatrechtlich"
+allg$rechtsform_agg.f [allg$RECHTSFORM %in% "7"] <- "Privatrechtlich"
+allg$rechtsform_agg.f [allg$RECHTSFORM %in% "8"] <- "Privatrechtlich"
+allg$rechtsform_agg.f [allg$RECHTSFORM %in% "9"] <- "Privatrechtlich"
+allg$rechtsform_agg.f [allg$RECHTSFORM %in% "10"] <- "Privatrechtlich"
+allg$rechtsform_agg.f [allg$RECHTSFORM %in% "20"] <- "Verwaltung Bund"
+allg$rechtsform_agg.f [allg$RECHTSFORM %in% "21"] <- "Öffentlich-rechtlich"
+allg$rechtsform_agg.f [allg$RECHTSFORM %in% "22"] <- "Öffentlich-rechtlich"
+allg$rechtsform_agg.f [allg$RECHTSFORM %in% "23"] <- "Öffentlich-rechtlich"
+allg$rechtsform_agg.f [allg$RECHTSFORM %in% "24"] <- "Öffentlich-rechtlich"
+allg$rechtsform_agg.f [allg$RECHTSFORM %in% "25"] <- "Öffentlich-rechtlich"
+allg$rechtsform_agg.f [allg$RECHTSFORM %in% "27"] <- "Öffentlich-rechtlich"
+allg$rechtsform_agg.f [allg$RECHTSFORM %in% "28"] <- "Öffentlich-rechtlich"
+allg$rechtsform_agg.f [allg$RECHTSFORM %in% "29"] <- "Öffentlich-rechtlich"
+allg$rechtsform_agg.f [allg$RECHTSFORM %in% "30"] <- "Öffentlich-rechtlich"
+allg$rechtsform_agg.f [allg$RECHTSFORM %in% "31"] <- "Öffentlich-rechtlich"
+allg$rechtsform_agg.f [allg$RECHTSFORM %in% "32"] <- "Öffentlich-rechtlich"
+allg$rechtsform_agg.f [allg$RECHTSFORM %in% "33"] <- "Öffentlich-rechtlich"
+allg$rechtsform_agg.f [allg$RECHTSFORM %in% "34"] <- "Öffentlich-rechtlich"
+
+# transforming in factor
+allg$rechtsform_agg.f <- as.factor(allg$rechtsform_agg.f)  
+  ---
+
+
+# change position of NEW rechtsform_agg.f
+allg <- allg %>% relocate (rechtsform_agg.f, .before  = ERSTE_ERHEBUNG)
 
 ### NEW FTE_ARZT ----
 # creating new var called FTE_ARZT which is the mean value of all other physicians subgroups
