@@ -2,13 +2,13 @@ This folder was set up by Jana Bartakova on September 2024 as a clean copy from 
 
 AUTHORS
 -------
+MEng. BSc. Jana Bartáková PhD, Health Economist (PI, Projec Leader and Fellow)
+
+Prof. Dr. Michael Simon, PhD (Advisor)
+
 Sarah Holzer, MSc Nursing Science
 
-Aleksandra Vasic, Msc Nursing Science
-
-Prof. Dr. Michael Simon, PhD (PI)
-
-MEng. BSc. Jana Bartáková PhD, Health Economist (PI)
+Aleksandra Vasic, MSc Nursing Science
 
 CONTACT INFORMATION
 -------------------
@@ -34,7 +34,7 @@ Nurses’ and physicians’ wages drivers in Swiss hospitals: a retrospective ob
 
 #### Aim 2: 
 
-Nexus of nurses' and physicians' wages and patient safety outcomes in acute care settings: a cross-sectional study using routine data
+Nexus of nurses' and physicians' wages and mortality in acute care settings: a cross-sectional study using routine data
 
 #### Aim 3: 
 
@@ -47,6 +47,7 @@ DESCRIPTION OF SUBSTUDIES
 In this retrospective observational time series cross-sectional study based on de-identified data regularly collected by the Federal Statistical Office (BFS) which comprises information on Swiss acute care and specialized hospitals, as well as on staff (including nurses and physicians) employed in these hospitals from 2014 to 2020. After data cleaning and preparation, we conducted descriptive analysis. Eventually, we ran different regression models to determine the factors affecting wages for nurses and physicians.
 
 #### Aim 2
+In this cross-sectional study we used Swiss patient and hospital routine data from the year 2019, which we linked by matching the anonymized hospital identification number. After cleaning the data, we conducted descriptive analyses. For the inferential analysis we used the Generalized Additive Mixed Model (GAMM) to explore the association between nurse and physician wages aggregated at hospital level, and all-cause 30-day mortality. Sensitivity analyses were conducted by applying the same procedures to the data from 2018 and 2020.
 
 #### Aim 3
 
@@ -78,19 +79,19 @@ Main folder HONEST
 
 	01_scripts_aim_1
  
- 		01_data_cleaning
+ 		11_data_cleaning
  		
- 		02_descriptive_analysis
+ 		12_descriptive_analysis
  		
- 		03_inferential_analysis
+ 		13_inferential_analysis
        
   	02_scripts_aim_2
        
- 		01_data_cleaning
+ 		21_data_cleaning
  		
- 		02_descriptive_analysis
+ 		22_descriptive_analysis
  		
- 		03_inferential_analysis
+ 		23_inferential_analysis
        
   HONEST.Rproj
        
@@ -124,7 +125,8 @@ Softwares that need to be installed:
 You will find details on how to run each script at the beginning of the scripts. 
 
 #### Aim 2
-1. Run the cleaning using following R scripts:
+1. Refer to the codebook "Codebook_HONEST-aim2.pdf" at: https://github.com/JanaBartak/HONEST/tree/main/02_scripts_aim_2
+2. Run the cleaning using following R scripts:
 - Open: Data-Cleaning.Rproj
 	- 00_Load_Save_Raw_New_Data.R
 	- 01_Delete_Specialty-Clinics_Children_LoS-outside-range_Missings_Save.R
@@ -134,13 +136,13 @@ You will find details on how to run each script at the beginning of the scripts.
 	- 04_Prepare-New-Hosp-dat.R
 	- 05_Subset-Hosp_Merge-Patient-Hosp.R
 	
-2. Run the descriptive analysis using following R scripts:
+3. Run the descriptive analysis using following R scripts:
 - Open: Descriptive-Analysis.Rproj
 	- 01_Table-One_Patients.R
 	- 02a_Table_One_Hospitals.R
 	- 02b_Table-One_Empl-absolute-numbers.R
 	
-3. Run the inferential analysis using following RMD script:
+4. Run the inferential analysis using following RMD script:
 	- inferential_models_HONEST_aim_2.RMD
 	
 You will find details on how to run each script at the beginning of the scripts.

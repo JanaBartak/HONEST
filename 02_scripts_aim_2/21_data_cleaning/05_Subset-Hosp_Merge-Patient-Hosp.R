@@ -55,17 +55,14 @@ table(honest_DEF$JAHR, useNA = "always") # no NA's
 ## 2020 ----
 New.Hosp.2020 <- honest_DEF %>%
   filter(JAHR == 2020)
-### n = 126, correct
 
 ## 2019 ----
 New.Hosp.2019 <- honest_DEF %>%
   filter(JAHR == 2019)
-### n = 135, correct
 
 ## 2018 ----
 New.Hosp.2018 <- honest_DEF %>%
   filter(JAHR == 2018)
-### n = 132, correct
 
 
 # 4. Save Hosp. subsets as .RData files (please do not execute!) ----
