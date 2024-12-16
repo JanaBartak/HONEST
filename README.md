@@ -36,10 +36,6 @@ Nurses’ and physicians’ wages drivers in Swiss hospitals: a retrospective ob
 
 Nexus of nurses' and physicians' wages and mortality in acute care settings: a cross-sectional study using routine data
 
-#### Aim 3: 
-
-Cost-effectiveness and budget impact of hospitals’ investments in nurses’ and physicians’ wages
-
 
 DESCRIPTION OF SUBSTUDIES
 -------------------------
@@ -49,27 +45,21 @@ In this retrospective observational time series cross-sectional study based on d
 #### Aim 2
 In this cross-sectional study we used Swiss patient and hospital routine data from the year 2019, which we linked by matching the anonymized hospital identification number. After cleaning the data, we conducted descriptive analyses. For the inferential analysis we used the Generalized Additive Mixed Model (GAMM) to explore the association between nurse and physician wages aggregated at hospital level, and all-cause 30-day mortality. Sensitivity analyses were conducted by applying the same procedures to the data from 2018 and 2020.
 
-#### Aim 3
-
 
 FOLDERS/DIRECTORIES
 -------------------
 
 * scripts aim 1: https://github.com/JanaBartak/HONEST/tree/main/01_scripts_aim_1/
 * scripts aim 2: https://github.com/JanaBartak/HONEST/tree/main/02_scripts_aim_2/
-* scripts aim 3:
 
 * data cleaning aim 1: https://github.com/JanaBartak/HONEST/tree/main/01_scripts_aim_1/01_data_cleaning 
 * data cleaning aim 2: https://github.com/JanaBartak/HONEST/tree/main/02_scripts_aim_2/01_data_cleaning
-* data cleaning aim 3:
 
 * descriptive analysis aim 1: https://github.com/JanaBartak/HONEST/tree/main/01_scripts_aim_1/02_descriptive_analysis
 * descriptive analysis aim 2: https://github.com/JanaBartak/HONEST/tree/main/02_scripts_aim_2/02_descriptive_analysis
-* descriptive analysis aim 3:
 
 * inferential analysis aim 1: https://github.com/JanaBartak/HONEST/tree/main/01_scripts_aim_1/03_inferential_analysis
 * inferential analysis aim 2: https://github.com/JanaBartak/HONEST/tree/main/02_scripts_aim_2/03_inferential_analysis
-* inferential analysis aim 3:
 
 
  FOLDER OVERVIEW
@@ -146,8 +136,6 @@ You will find details on how to run each script at the beginning of the scripts.
 	- inferential_models_HONEST_aim_2.RMD
 	
 You will find details on how to run each script at the beginning of the scripts.
-
-#### Aim 3
 
 
 
