@@ -23,6 +23,7 @@ library(dplyr)
 library(scales)
 library(naniar)
 library(sjPlot) # table functions
+library(car)
 
 # Load aggregated datasets honest and honest_DEF
 load("/Volumes/research$/HONEST Team/Data/aim_1_processed_data/07_FINAL_datasets.RData")
@@ -360,6 +361,25 @@ tab_model(mp1, mp2, mp3, mp4, mp5, mp6, dv.labels = c("mp1 = thesis model", "mp2
 ``` {r table model tot, echo=FALSE}
 tab_model(mn5, mp5, dv.labels = c("Nurses model = rescaled pred. + month. wage", "Physicians model = rescaled pred. + month. wage"), title = "Models HONEST aim1")
 ```
+
+### VIF
+``` {r VIF}
+# calculate vif (Variance Inflation Factor)
+car::vif(mn5)
+
+#create vector of VIF values
+vif_values <- vif(mn5)
+
+#create horizontal bar chart to display each VIF value
+barplot(vif_values, main = "VIF Values", 
+        horiz = TRUE, 
+        col = "steelblue",
+        las = 1) +
+  abline(v = 5, lwd = 3, lty = 2) #add vertical line at 5
+
+```
+
+
 
 ### Model log nurses and physicians
 ``` {r table model sens, echo=FALSE}
