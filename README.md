@@ -1,53 +1,50 @@
+# HONEST Project
+
 This folder was set up by Jana Bartakova on September 2024 as a clean copy from a repository created on August 2022.
 
-AUTHORS
--------
-MEng. BSc. Jana Bartáková PhD, Health Economist (PI, Projec Leader and Fellow)
+## Authors
+- **MEng. BSc. Jana Bartáková**, PhD – Health Economist (Principal Investigator)
+- **Prof. Dr. Michael Simon**, PhD – Advisor
+- **Sarah Holzer**, MSc Nursing Science
+- **Aleksandra Vasic**, MSc Nursing Science
 
-Prof. Dr. Michael Simon, PhD (Advisor)
-
-Sarah Holzer, MSc Nursing Science
-
-Aleksandra Vasic, MSc Nursing Science
-
-CONTACT INFORMATION
--------------------
-Institute of Nursing Science
-
-Medical Faculty | Department of Public Health (DPH) | University of Basel
-
-Bernoullistrasse 28
-
-CH-4056 Basel
-
-Schweiz
-
+## Contact Information
+**Jana Bartáková**  
 Email: jana.bartakova@unibas.ch
 
-HONEST
-------
+**Institute of Nursing Science**  
+Medical Faculty | Department of Public Health (DPH) | University of Basel  
+Bernoullistrasse 28, CH-4056 Basel, Switzerland
+
+---
+
+## Project Overview
+
+### HONEST Project
 HONEST is a research project funded by European Uninon’s Marie Skłodowska-Curie Actions Programme. The HONEST project aims to facilitate the Swiss hospitals’ staff budget transparency and optimize investments in health systems through a better understanding of the association between nurse and physician wages and patient safety outcomes.
 
-#### Aim 1: 
+### Aim 1: 
 
 Nurses’ and physicians’ wages drivers in Swiss hospitals: a retrospective observational time series cross-sectional study
 
-#### Aim 2: 
+### Aim 2: 
 
 Nexus of nurses' and physicians' wages and mortality in acute care settings: a cross-sectional study using routine data
 
+---
 
-DESCRIPTION OF SUBSTUDIES
--------------------------
-#### Aim 1 
+## Description of Substudies
+### Aim 1 
 In this retrospective observational time series cross-sectional study based on de-identified data regularly collected by the Federal Statistical Office (BFS) which comprises information on Swiss acute care and specialized hospitals, as well as on staff (including nurses and physicians) employed in these hospitals from 2014 to 2020. After data cleaning and preparation, we conducted descriptive analysis. Eventually, we ran different regression models to determine the factors affecting wages for nurses and physicians.
 
-#### Aim 2
+### Aim 2
 In this cross-sectional study we used Swiss patient and hospital routine data from the year 2019, which we linked by matching the anonymized hospital identification number. After cleaning the data, we conducted descriptive analyses. For the inferential analysis we used the Generalized Additive Mixed Model (GAMM) to explore the association between nurse and physician wages aggregated at hospital level, and all-cause 30-day mortality. Sensitivity analyses were conducted by applying the same procedures to the data from 2018 and 2020.
 
+---
 
-FOLDERS/DIRECTORIES
--------------------
+## Project Setup
+
+### Folder Directories
 
 * scripts aim 1: https://github.com/JanaBartak/HONEST/tree/main/01_scripts_aim_1/
 * scripts aim 2: https://github.com/JanaBartak/HONEST/tree/main/02_scripts_aim_2/
@@ -62,10 +59,10 @@ FOLDERS/DIRECTORIES
 * inferential analysis aim 2: https://github.com/JanaBartak/HONEST/tree/main/02_scripts_aim_2/03_inferential_analysis
 
 
- FOLDER OVERVIEW
- -------------
+### Folder Overview
 
-Main folder HONEST
+
+
 
 	01_scripts_aim_1
  
@@ -74,24 +71,30 @@ Main folder HONEST
  		12_descriptive_analysis
  		
  		13_inferential_analysis
+ 		
+ 		README
        
-  	02_scripts_aim_2
+    02_scripts_aim_2
        
  		21_data_cleaning
  		
  		22_descriptive_analysis
  		
  		23_inferential_analysis
-       
-  HONEST.Rproj
-       
-  README.md
+ 		
+ 		Codebook_HONEST-aim2.pdf
+ 		
+ 	HONEST.Rproj
+ 		
+ 	README
 
 
- WORKING WITHIN THIS PROJECT
- ---------------------------
+---
 
-### Get started
+## WORKING WITHIN THIS PROJECT
+
+
+#### Get started
 These instructions will help you set up the project on your local machine.
 
 #### Prerequisites
@@ -103,6 +106,8 @@ Softwares that need to be installed:
 2. Install required packages using 'install.packages("package_name")
 
 #### Aim 1
+Specific information about the Aim 1 data is available in the README and metadata files.
+
 1. Run the cleaning using following R scripts:
 	- 00_load_raw_data.R
 	- 01_handling_missing_values_and_recoding.R
@@ -112,6 +117,13 @@ Softwares that need to be installed:
 	- 05_preparing_variable_wage.R
 	- 06_aggregate_variables_personal_at_hospital_level.R
 	- 07_merging_all_datasets_and_applying_incl_excl_criteria.R
+	
+2. Run descriptive analysis using following R script:
+    - exploratory_descriptive_HONEST_aim1.Rmd
+  
+3. Run inferential analysis using following R script: 
+   - inferential_models_HONEST_aim_1.Rmd
+
 You will find details on how to run each script at the beginning of the scripts. 
 
 #### Aim 2
