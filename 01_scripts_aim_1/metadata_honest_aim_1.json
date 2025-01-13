@@ -1,0 +1,364 @@
+{
+"title": "Metadata HONEST Aim 1 Project",
+ "metadata_summary_HONEST_aim_1_dataset": {
+  "general_info": {
+    "name": "honest_DEF",
+    "nr_observations": 916,
+    "num_variables": 19
+  },
+    "variables_overview": {
+      "columns": [
+        {
+          "name": "BUR_ALEAT_T",
+          "description": "Hospital identifier for acute care hospitals"
+        },
+        {
+          "name": "JAHR",
+          "description": "Year of the data point (year when survey was carried out)",
+          "summary_statistics": {
+            "min": 2014,
+            "max": 2020
+          }
+        },
+        {
+          "name": "typologie.f",
+          "description": "Hospital type (e.g., university hospital, cantonal hospital), categorized based on original TYPOL99 codes",
+          "derived_from": ["typo_ks_allg_2014-2020 dataset, variable TYPOL99"],
+          "manipulation_steps": [
+            "Mapped TYPOL99 codes to specific hospital types.",
+            "K111 -> University hospital",
+            "K112 -> Cantonal hospital",
+            "K121 -> Supply level 3 hospital",
+            "K122 -> Supply level 4 hospital",
+            "K123 -> Supply level 5 hospital",
+            "K211 -> Psychiatry supply level 1",
+            "K212 -> Psychiatry supply level 2",
+            "K221 -> Rehabilitation",
+            "K231 -> Special clinic",
+            "K232 -> SK Ginecology/Neonatology",
+            "K233 -> Special clinic",
+            "K234 -> Special clinic",
+            "K235 -> Special clinic",
+            "Only kept K111-K123 and K233-K235"
+          ],
+          "summary_statistics": {
+            "categories": {
+              "University hospital": 35,
+              "Cantonal hospital": 260,
+              "Supply level 3 hospital": 109,
+              "Supply level 4 hospital": 155,
+              "Supply level 5 hospital": 81,
+              "Special clinic": 276
+            }
+          }
+        },
+        {
+          "name": "month_wageFTE_nurses",
+          "description": "Mean monthly salary for nurses per full-time equivalent per hospital",
+          "derived_from": ["typo_ks_fibu_2014-2020 dataset, variable LOHN_PFLEGE and typo_ks_personal_2014-2020 dataset, variable MA_FTE for nurses"],
+          "manipulation_steps": [
+            "Aggregated FTE data by hospital and year for nurses (sum)",
+            "Merged FTE data with the hospital data containing wage expences information",
+            "Calculated annual wage/FTE by dividing the total hospital expences for wages by the respective FTE for nurses",
+            "Divided annual salary by 13 to get monthly salary"
+          ],
+          "summary_statistics": {
+            "min": 2890,
+            "1IQR": 5426,
+            "median": 6311,
+            "mean": 6344,
+            "3IQR": 7037,
+            "max": 14935
+          }
+        },
+        {
+          "name": "month_wageFTE_physicians",
+          "description": "Mean monthly salary for physicians per full-time equivalents per hospital",
+          "derived_from": ["typo_ks_fibu_2014-2020 dataset, variable LOHN_ARZT and typo_ks_personal_2014-2020 dataset, variable MA_FTE for physicians"],
+          "manipulation_steps": [
+            "Aggregated FTE data by hospital and year for physicians (sum)",
+            "Merged FTE data with the hospital data containing wage expences information",
+            "Calculated annual wage/FTE by dividing the total hospital expences for wages by the respective FTE for physicians",
+            "Divided annual salary by 13 to get monthly salary"
+          ],
+          "summary_statistics": {
+            "min": 4708,
+            "1IQR": 13422,
+            "median": 15713,
+            "mean": 16659,
+            "3IQR": 19270,
+            "max": 30501
+          }
+        },
+        {
+          "name": "age.mean_nurse",
+          "description": "Mean age of nurses per hospital",
+          "derived_from": ["typo_ks_personal_2014-2020, variable age"],
+          "manipulation_steps": [
+            "Mean age of nurses was calculated by aggregating the age data of nurses for each hospital and year"
+          ],
+          "summary_statistics": {
+            "min": 32.73,
+            "1IQR": 37.87,
+            "median": 39.63,
+            "mean": 40.15,
+            "3IQR": 41.45,
+            "max": 55.00
+          }
+        },
+        {
+          "name": "age.mean_physician",
+          "description": "Mean age of physicians per hospital",
+          "derived_from": ["typo_ks_personal_2014-2020 dataset, variable age"],
+          "manipulation_steps": [
+            "Mean age of physicians was calculated by aggregating the age data of physicians for each hospital and year"
+          ],
+          "summary_statistics": {
+            "min": 27.00,
+            "1IQR": 37.95,
+            "median": 39.66,
+            "mean": 41.34,
+            "3IQR": 43.25,
+            "max": 65.00
+          }
+        },
+        {
+          "name": "pct.female_nurse",
+          "description": "Percentage of female nurses per hospital",
+          "derived_from": ["typo_ks_personal_2014-2020, variable sex"],
+          "manipulation_steps": [
+            "The percentage of female nurses was calculated by grouping the dataset by hospital and year",
+            "For each group, the proportion of nurses identified as "female" was computed using the mean function (dplyr package)"
+          ],
+          "summary_statistics": {
+            "min": 0.55,
+            "1IQR": 0.84,
+            "median": 0.88,
+            "mean": 0.86,
+            "3IQR": 0.91,
+            "max": 1.0
+          }
+        },
+        {
+          "name": "pct.female_physician",
+          "description": "Percentage of female physicians per hospital",
+          "derived_from": ["typo_ks_personal_2014-2020, variable sex"],
+          "manipulation_steps": [
+            "The percentage of female physicians was calculated by grouping the dataset by hospital and year",
+            "For each group, the proportion of physicians identified as "female" was computed using the mean function (dplyr package)"
+          ],
+          "summary_statistics": {
+            "min": 0.0,
+            "1IQR": 0.41,
+            "median": 0.48,
+            "mean": 0.46,
+            "3IQR": 0.54,
+            "max": 1.0
+          }
+        },
+        {
+          "name": "pct.chief_leading",
+          "description": "Percentage of nurses and physicians in leadership positions",
+          "derived_from": ["raw_leadership_positions", "total_nurses_and_physicians"],
+          "manipulation_steps": [
+            "Calculated percentage from raw data"
+          ],
+          "summary_statistics": {
+            "min": 0.0000,
+            "max": 1.0000,
+            "mean": 0.2689,
+            "median": 0.2448,
+            "std_dev": 0.2
+          }
+        },
+        {
+          "name": "pct.attending_hospital",
+          "description": "Percentage of nurses and physicians attending hospital",
+          "derived_from": ["raw_attending_hospital", "total_nurses_and_physicians"],
+          "manipulation_steps": [
+            "Calculated percentage from raw data"
+          ],
+          "summary_statistics": {
+            "min": 0.0000,
+            "max": 1.0000,
+            "mean": 0.2811,
+            "median": 0.2689,
+            "std_dev": 0.2
+          }
+        },
+        {
+          "name": "pct.residents_students",
+          "description": "Percentage of medical residents and students",
+          "derived_from": ["raw_residents_students", "total_nurses_and_physicians"],
+          "manipulation_steps": [
+            "Calculated percentage from raw data"
+          ],
+          "summary_statistics": {
+            "min": 0.0000,
+            "max": 1.0000,
+            "mean": 0.1394,
+            "median": 0.1394,
+            "std_dev": 0.2
+          }
+        },
+        {
+          "name": "pct.RNs_etc",
+          "description": "Percentage of Registered Nurses and similar positions",
+          "derived_from": ["raw_RNs_etc", "total_nurses"],
+          "manipulation_steps": [
+            "Calculated percentage from raw data"
+          ],
+          "summary_statistics": {
+            "min": 0.0000,
+            "max": 1.0000,
+            "mean": 0.4159,
+            "median": 0.4087,
+            "std_dev": 0.2
+          }
+        },
+        {
+          "name": "pct.LPNs",
+          "description": "Percentage of Licensed Practical Nurses",
+          "derived_from": ["raw_LPNs", "total_nurses"],
+          "manipulation_steps": [
+            "Calculated percentage from raw data"
+          ],
+          "summary_statistics": {
+            "min": 0.0000,
+            "max": 1.0000,
+            "mean": 0.1375,
+            "median": 0.1205,
+            "std_dev": 0.2
+          }
+        },
+        {
+          "name": "pct.n_ass",
+          "description": "Percentage of nurses in assistant roles",
+          "derived_from": ["raw_assistant_nurses", "total_nurses"],
+          "manipulation_steps": [
+            "Calculated percentage from raw data"
+          ],
+          "summary_statistics": {
+            "min": 0.0000,
+            "max": 1.0000,
+            "mean": 0.0829,
+            "median": 0.0794,
+            "std_dev": 0.1
+          }
+        },
+        {
+          "name": "pct.CH_nurse",
+          "description": "Percentage of nurses with a diploma from Switzerland",
+          "derived_from": ["raw_CH_nurse", "total_nurses"],
+          "manipulation_steps": [
+            "Calculated percentage from raw data"
+          ],
+          "summary_statistics": {
+            "min": 0.0000,
+            "max": 1.0000,
+            "mean": 0.8298,
+            "median": 0.8469,
+            "std_dev": 0.1
+          }
+        },
+        {
+          "name": "pct.CH_physician",
+          "description": "Percentage of physicians with a diploma from Switzerland",
+          "derived_from": ["raw_CH_physician", "total_physicians"],
+          "manipulation_steps": [
+            "Calculated percentage from raw data"
+          ],
+          "summary_statistics": {
+            "min": 0.0000,
+            "max": 1.0000,
+            "mean": 0.8223,
+            "median": 0.8298,
+            "std_dev": 0.1
+          }
+        },
+        {
+          "name": "pct.origin_dipl_CH_nurse",
+          "description": "Percentage of nurses with a diploma from Switzerland",
+          "derived_from": ["raw_origin_dipl_CH_nurse", "total_nurses"],
+          "manipulation_steps": [
+            "Calculated percentage from raw data"
+          ],
+          "summary_statistics": {
+            "min": 0.0000,
+            "max": 1.0000,
+            "mean": 0.8887,
+            "median": 0.9125,
+            "std_dev": 0.1
+          }
+        },
+        {
+          "name": "pct.origin_dipl_CH_physician",
+          "description": "Percentage of physicians with a diploma from Switzerland",
+          "derived_from": ["raw_origin_dipl_CH_physician", "total_physicians"],
+          "manipulation_steps": [
+            "Calculated percentage from raw data"
+          ],
+          "summary_statistics": {
+            "min": 0.0000,
+            "max": 1.0000,
+            "mean": 0.8532,
+            "median": 0.8778,
+            "std_dev": 0.1
+          }
+        },
+        {
+          "name": "pct.origin_dipl_notCH_nurse",
+          "description": "Percentage of nurses with a non-Swiss diploma",
+          "derived_from": ["raw_origin_dipl_notCH_nurse", "total_nurses"],
+          "manipulation_steps": [
+            "Calculated percentage from raw data"
+          ],
+          "summary_statistics": {
+            "min": 0.0000,
+            "max": 1.0000,
+            "mean": 0.1113,
+            "median": 0.0875,
+            "std_dev": 0.1
+          }
+        },
+        {
+          "name": "pct.origin_dipl_notCH_physician",
+          "description": "Percentage of physicians with a non-Swiss diploma",
+          "derived_from": ["raw_origin_dipl_notCH_physician", "total_physicians"],
+          "manipulation_steps": [
+            "Calculated percentage from raw data"
+          ],
+          "summary_statistics": {
+            "min": 0.0000,
+            "max": 1.0000,
+            "mean": 0.1468,
+            "median": 0.1222,
+            "std_dev": 0.1
+          }
+        },
+        {
+          "name": "equipment",
+          "description": "Equipment expenditure data for hospitals",
+          "derived_from": ["raw_equipment_data"],
+          "manipulation_steps": [
+            "Extracted equipment expenditure from raw data"
+          ],
+          "summary_statistics": {
+            "min": 10000,
+            "max": 1000000,
+            "mean": 500000,
+            "median": 350000,
+            "std_dev": 200000
+          }
+        },
+        {
+          "name": "AMBULANTE_KONSULTATIONEN",
+          "description": "ambulatory consultations data",
+          "derived_from": ["raw_ambulatory_consultations"],
+          "manipulation_steps": [
+            "Extracted data on ambulatory consultations from raw data"
+          ]
+        }
+      ]
+    }
+  }
