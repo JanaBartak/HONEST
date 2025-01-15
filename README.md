@@ -2,6 +2,8 @@
 
 This folder was set up by Jana Bartakova on September 2024 as a clean copy from a repository created on August 2022.
 
+This project has received funding from the European Union's Horizon 2020 research and innovation programme under grant agreement No. 101029311.
+
 ## Authors
 - **MEng. BSc. Jana Bartáková**, PhD – Health Economist (Principal Investigator)
 - **Prof. Dr. Michael Simon**, PhD – Advisor
