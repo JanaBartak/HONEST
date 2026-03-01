@@ -242,15 +242,6 @@ combined_20 <- nurse20 + phys20 +
   )
 
 print(combined_20)
-
-ggsave(
-  filename = "Scatterplot of Wages & Staffing Levels, 2020.jpeg",
-  plot     = combined_20,
-  width    = 20, 
-  dpi = 300, 
-  units = "in", 
-  device = "jpeg"
-)
 ```
 
 \newpage
@@ -306,15 +297,6 @@ combined_19 <- nurse19 + phys19 +
   )
 
 print(combined_19)
-
-ggsave(
-  filename = "Scatterplot of Wages & Staffing Levels, 2019.jpeg",
-  plot     = combined_19,
-  width    = 20, 
-  dpi = 300, 
-  units = "in", 
-  device = "jpeg"
-)
 ```
 
 \newpage
@@ -370,14 +352,5 @@ combined_18 <- nurse18 + phys18 +
   )
 
 print(combined_18)
-
-ggsave(
-  filename = "Scatterplot of Wages & Staffing Levels, 2018.jpeg",
-  plot     = combined_18,
-  width    = 20, 
-  dpi = 300, 
-  units = "in", 
-  device = "jpeg"
-)
 ```
 
