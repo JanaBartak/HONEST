@@ -1,0 +1,383 @@
+---
+title: "Secondary Analysis: Association Between Nurse and Physician Wages and Staffing"
+author: "Aleksandra Vasic"
+output: pdf_document
+---
+```{r include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+# Packages
+library(tinytex)
+library(dplyr)
+library(ggplot2)
+library(scales)
+library(patchwork)
+library(extrafont)
+
+# Set Work Directory & load merged data ----
+setwd("/Volumes/research$/HONEST Team/Data/aim2_processed-data/aim2_new-merged-data/")
+load("New.Merged.FTE.Data.RData")
+```
+\newpage
+# Nurses
+```{r echo=TRUE}
+# Create variable "Nurse staffing level" (nurse.staff.level)
+## 2020
+New.Merged.FTE.2020$nurse.staff.level <- 
+  New.Merged.FTE.2020$Pflege_FTE*1890/New.Merged.FTE.2020$PFLEGETAGE_STATIONAER
+
+## 2019
+New.Merged.FTE.2019$nurse.staff.level <- 
+  New.Merged.FTE.2019$Pflege_FTE*1890/New.Merged.FTE.2019$PFLEGETAGE_STATIONAER
+
+## 2018
+New.Merged.FTE.2018$nurse.staff.level <- 
+  New.Merged.FTE.2018$Pflege_FTE*1890/New.Merged.FTE.2018$PFLEGETAGE_STATIONAER
+
+# Correlation Nurses - Overall
+cor(New.Merged.FTE.2020$nurse.staff.level, New.Merged.FTE.2020$wageFTE_nurses, method="spearman")
+cor(New.Merged.FTE.2019$nurse.staff.level, New.Merged.FTE.2019$wageFTE_nurses, method="spearman")
+cor(New.Merged.FTE.2018$nurse.staff.level, New.Merged.FTE.2018$wageFTE_nurses, method="spearman")
+
+# Correlation Nurses - Stratified by Hospital Level
+## 2020
+New.Merged.FTE.2020 %>%
+  group_by(Hosp.Level) %>%
+  summarise(correlation = cor(nurse.staff.level, wageFTE_nurses, method = "spearman"))
+
+## 2019
+New.Merged.FTE.2019 %>%
+  group_by(Hosp.Level) %>%
+  summarise(correlation = cor(nurse.staff.level, wageFTE_nurses, method = "spearman"))
+
+## 2018
+New.Merged.FTE.2018 %>%
+  group_by(Hosp.Level) %>%
+  summarise(correlation = cor(nurse.staff.level, wageFTE_nurses, method = "spearman"))
+
+
+```
+\newpage
+## Nurse Scatterplots
+### 2020 - Stratified by Hospital Level
+```{r echo=TRUE}
+ggplot(data = New.Merged.FTE.2020, aes(x=wageFTE_nurses, y=nurse.staff.level)) + 
+  geom_point(aes(color=Hosp.Level)) +
+  geom_smooth(method=lm, color="black") +
+  geom_smooth(method=lm, aes(color=Hosp.Level)) +  
+  labs(
+    title = "Scatterplot of Wages & Nurse Staffing Levels 2020",
+    x = "Wages per FTE",
+    y = "Nurse Staffing Level",
+    color = "Hospital Level"
+  ) +
+  scale_x_continuous(labels = scales::comma, limits = c(40000, 120000))
+```
+\newpage
+### 2019 - Stratified by Hospital Level
+```{r echo=TRUE}
+ggplot(data = New.Merged.FTE.2019, aes(x=wageFTE_nurses, y=nurse.staff.level)) + 
+  geom_point(aes(color=Hosp.Level)) +
+  geom_smooth(method=lm, color="black") +
+  geom_smooth(method=lm, aes(color=Hosp.Level)) +  
+  labs(
+    title = "Scatterplot of Wages & Nurse Staffing Levels 2019",
+    x = "Wages per FTE",
+    y = "Nurse Staffing Level",
+    color = "Hospital Level"
+  ) +
+  scale_x_continuous(labels = scales::comma, limits = c(40000, 125000))
+```
+\newpage
+### 2018 - Stratified by Hospital Level
+```{r echo=TRUE}
+ggplot(data = New.Merged.FTE.2018, aes(x=wageFTE_nurses, y=nurse.staff.level)) + 
+  geom_point(aes(color=Hosp.Level)) +
+  geom_smooth(method=lm, color="black") +
+  geom_smooth(method=lm, aes(color=Hosp.Level)) +  
+  labs(
+    title = "Scatterplot of Wages & Nurse Staffing Levels 2018",
+    x = "Wages per FTE",
+    y = "Nurse Staffing Level",
+    color = "Hospital Level"
+  ) +
+  scale_x_continuous(labels = scales::comma, limits = c(35000, 150000))
+```
+
+\newpage
+# Physicians
+```{r echo=TRUE}
+# Create variable "Physician staffing level" (phys.staff.level)
+## 2020
+New.Merged.FTE.2020$phys.staff.level <- 
+  New.Merged.FTE.2020$Arzt_FTE*2475/New.Merged.FTE.2020$PFLEGETAGE_STATIONAER
+
+## 2019
+New.Merged.FTE.2019$phys.staff.level <- 
+  New.Merged.FTE.2019$Arzt_FTE*2475/New.Merged.FTE.2019$PFLEGETAGE_STATIONAER
+
+## 2018
+New.Merged.FTE.2018$phys.staff.level <- 
+  New.Merged.FTE.2018$Arzt_FTE*2475/New.Merged.FTE.2018$PFLEGETAGE_STATIONAER
+
+# Correlation Physicians - Overall
+cor(New.Merged.FTE.2020$phys.staff.level, New.Merged.FTE.2020$wageFTE_physicians, method="spearman")
+cor(New.Merged.FTE.2019$phys.staff.level, New.Merged.FTE.2019$wageFTE_physicians, method="spearman")
+cor(New.Merged.FTE.2018$phys.staff.level, New.Merged.FTE.2018$wageFTE_physicians, method="spearman")
+
+# Correlation Physicians - Stratified by Hospital Level
+## 2020
+New.Merged.FTE.2020 %>%
+  group_by(Hosp.Level) %>%
+  summarise(correlation = cor(phys.staff.level, wageFTE_physicians, method = "spearman"))
+
+## 2019
+New.Merged.FTE.2019 %>%
+  group_by(Hosp.Level) %>%
+  summarise(correlation = cor(phys.staff.level, wageFTE_physicians, method = "spearman"))
+
+## 2018
+New.Merged.FTE.2018 %>%
+  group_by(Hosp.Level) %>%
+  summarise(correlation = cor(phys.staff.level, wageFTE_physicians, method = "spearman"))
+```
+\newpage
+## Physician Scatterplots
+### 2020 - Stratified by Hospital Level
+\newpage
+```{r echo=TRUE}
+ggplot(data = New.Merged.FTE.2020, aes(x=wageFTE_physicians, y=phys.staff.level)) + 
+  geom_point(aes(color=Hosp.Level)) +
+  geom_smooth(method=lm, color="black") +
+  geom_smooth(method=lm, aes(color=Hosp.Level)) +  
+  labs(
+    title = "Scatterplot of Wages & Physician Staffing Levels 2020",
+    x = "Wages per FTE",
+    y = "Physician Staffing Level",
+    color = "Hospital Level"
+  ) +
+  scale_x_continuous(labels = scales::comma, limits = c(80000, 400000))
+```
+\newpage
+## 2019 - Stratified by Hospital Level
+```{r echo=TRUE}
+ggplot(data = New.Merged.FTE.2019, aes(x=wageFTE_physicians, y=phys.staff.level)) + 
+  geom_point(aes(color=Hosp.Level)) +
+  geom_smooth(method=lm, color="black") +
+  geom_smooth(method=lm, aes(color=Hosp.Level)) +  
+  labs(
+    title = "Scatterplot of Wages & Physician Staffing Levels 2019",
+    x = "Wages per FTE",
+    y = "Physician Staffing Level",
+    color = "Hospital Level"
+  ) +
+  scale_x_continuous(labels = scales::comma, limits = c(100000, 400000))
+```
+\newpage
+### 2018 - Stratified by Hospital Level
+```{r echo=TRUE}
+ggplot(data = New.Merged.FTE.2018, aes(x=wageFTE_physicians, y=phys.staff.level)) + 
+  geom_point(aes(color=Hosp.Level)) +
+  geom_smooth(method=lm, color="black") +
+  geom_smooth(method=lm, aes(color=Hosp.Level)) +  
+  labs(
+    title = "Scatterplot of Wages & Physician Staffing Levels 2018",
+    x = "Wages per FTE",
+    y = "Physician Staffing Level",
+    color = "Hospital Level"
+  ) +
+  scale_x_continuous(labels = scales::comma, limits = c(100000, 400000))
+```
+
+\newpage
+# Figures for Publication
+## 2020
+```{r echo=TRUE}
+font_import(pattern = "Times", prompt = FALSE)
+loadfonts(device = "pdf")
+
+nurse20 <- ggplot(data = New.Merged.FTE.2020, aes(x=wageFTE_nurses, y=nurse.staff.level)) + 
+  geom_point(aes(color=Hosp.Level)) +
+  geom_smooth(method=lm, color="black") +
+  geom_smooth(method=lm, aes(color=Hosp.Level)) +  
+  labs(title = "(A)",
+       x = "Wages per FTE",
+       y = "Staffing Level",
+       colour = "Hospital Level") +
+  theme_minimal(base_family = "Times New Roman") +
+  scale_x_continuous(labels = scales::comma, limits = c(35000, 150000))
+
+phys20 <- ggplot(data = New.Merged.FTE.2020, aes(x=wageFTE_physicians, y=phys.staff.level)) + 
+  geom_point(aes(color=Hosp.Level)) +
+  geom_smooth(method=lm, color="black") +
+  geom_smooth(method=lm, aes(color=Hosp.Level)) +  
+  labs(title = "(B)",
+       x = "Wages per FTE",
+       y = "Staffing Level",
+       colour = "Hospital Level") +
+  theme_minimal(base_family = "Times New Roman") +
+  scale_x_continuous(labels = scales::comma, limits = c(100000, 400000))
+
+
+combined_20 <- nurse20 + phys20 +
+  plot_annotation(
+    title   = "Scatterplot of Wages &  Staffing Levels, 2020",
+    caption = "(A) Nurses, (B) Physicians",
+    theme   = theme(
+      plot.title = element_text(
+        family = "Times New Roman",
+        size   = 16,
+        face   = "bold",
+        hjust  = 0.5
+      ),
+      plot.caption = element_text(
+        family = "Times New Roman",
+        size   = 10,
+        hjust  = 0,
+        margin = margin(t = 10)
+      )
+    )
+  ) &
+  theme(
+    text = element_text(family = "Times New Roman")
+  )
+
+print(combined_20)
+
+ggsave(
+  filename = "Scatterplot of Wages & Staffing Levels, 2020.jpeg",
+  plot     = combined_20,
+  width    = 20, 
+  dpi = 300, 
+  units = "in", 
+  device = "jpeg"
+)
+```
+
+\newpage
+## 2019
+```{r echo=TRUE}
+font_import(pattern = "Times", prompt = FALSE)
+loadfonts(device = "pdf")
+
+nurse19 <- ggplot(data = New.Merged.FTE.2019, aes(x=wageFTE_nurses, y=nurse.staff.level)) + 
+  geom_point(aes(color=Hosp.Level)) +
+  geom_smooth(method=lm, color="black") +
+  geom_smooth(method=lm, aes(color=Hosp.Level)) +  
+  labs(title = "(A)",
+       x = "Wages per FTE",
+       y = "Staffing Level",
+       colour = "Hospital Level") +
+  theme_minimal(base_family = "Times New Roman") +
+  scale_x_continuous(labels = scales::comma, limits = c(35000, 150000))
+
+phys19 <- ggplot(data = New.Merged.FTE.2019, aes(x=wageFTE_physicians, y=phys.staff.level)) + 
+  geom_point(aes(color=Hosp.Level)) +
+  geom_smooth(method=lm, color="black") +
+  geom_smooth(method=lm, aes(color=Hosp.Level)) +  
+  labs(title = "(B)",
+       x = "Wages per FTE",
+       y = "Staffing Level",
+       colour = "Hospital Level") +
+  theme_minimal(base_family = "Times New Roman") +
+  scale_x_continuous(labels = scales::comma, limits = c(100000, 400000))
+
+
+combined_19 <- nurse19 + phys19 +
+  plot_annotation(
+    title   = "Scatterplot of Wages &  Staffing Levels, 2019",
+    caption = "(A) Nurses, (B) Physicians",
+    theme   = theme(
+      plot.title = element_text(
+        family = "Times New Roman",
+        size   = 16,
+        face   = "bold",
+        hjust  = 0.5
+      ),
+      plot.caption = element_text(
+        family = "Times New Roman",
+        size   = 10,
+        hjust  = 0,
+        margin = margin(t = 10)
+      )
+    )
+  ) &
+  theme(
+    text = element_text(family = "Times New Roman")
+  )
+
+print(combined_19)
+
+ggsave(
+  filename = "Scatterplot of Wages & Staffing Levels, 2019.jpeg",
+  plot     = combined_19,
+  width    = 20, 
+  dpi = 300, 
+  units = "in", 
+  device = "jpeg"
+)
+```
+
+\newpage
+## 2018
+```{r echo=TRUE}
+font_import(pattern = "Times", prompt = FALSE)
+loadfonts(device = "pdf")
+
+nurse18 <- ggplot(data = New.Merged.FTE.2018, aes(x=wageFTE_nurses, y=nurse.staff.level)) + 
+  geom_point(aes(color=Hosp.Level)) +
+  geom_smooth(method=lm, color="black") +
+  geom_smooth(method=lm, aes(color=Hosp.Level)) +  
+  labs(title = "(A)",
+       x = "Wages per FTE",
+       y = "Staffing Level",
+       colour = "Hospital Level") +
+  theme_minimal(base_family = "Times New Roman") +
+  scale_x_continuous(labels = scales::comma, limits = c(35000, 150000))
+
+phys18 <- ggplot(data = New.Merged.FTE.2018, aes(x=wageFTE_physicians, y=phys.staff.level)) + 
+  geom_point(aes(color=Hosp.Level)) +
+  geom_smooth(method=lm, color="black") +
+  geom_smooth(method=lm, aes(color=Hosp.Level)) +  
+  labs(title = "(B)",
+       x = "Wages per FTE",
+       y = "Staffing Level",
+       colour = "Hospital Level") +
+  theme_minimal(base_family = "Times New Roman") +
+  scale_x_continuous(labels = scales::comma, limits = c(100000, 400000))
+
+
+combined_18 <- nurse18 + phys18 +
+  plot_annotation(
+    title   = "Scatterplot of Wages &  Staffing Levels, 2018",
+    caption = "(A) Nurses, (B) Physicians",
+    theme   = theme(
+      plot.title = element_text(
+        family = "Times New Roman",
+        size   = 16,
+        face   = "bold",
+        hjust  = 0.5
+      ),
+      plot.caption = element_text(
+        family = "Times New Roman",
+        size   = 10,
+        hjust  = 0,
+        margin = margin(t = 10)
+      )
+    )
+  ) &
+  theme(
+    text = element_text(family = "Times New Roman")
+  )
+
+print(combined_18)
+
+ggsave(
+  filename = "Scatterplot of Wages & Staffing Levels, 2018.jpeg",
+  plot     = combined_18,
+  width    = 20, 
+  dpi = 300, 
+  units = "in", 
+  device = "jpeg"
+)
+```
+
