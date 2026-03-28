@@ -78,54 +78,6 @@ New.Merged.FTE.2018 %>%
   summarise(correlation = cor.test(nurse.staff.level, wageFTE_nurses, method = "spearman", exact = FALSE)$estimate,
   pvalue = cor.test(nurse.staff.level, wageFTE_nurses, method = "spearman", exact = FALSE)$p.value)
 
-
-
-```
-\newpage
-## Nurse Scatterplots
-### 2020 - Stratified by Hospital Level
-```{r echo=TRUE}
-ggplot(data = New.Merged.FTE.2020, aes(x=wageFTE_nurses, y=nurse.staff.level)) + 
-  geom_point(aes(color=Hosp.Level)) +
-  geom_smooth(method=lm, color="black") +
-  geom_smooth(method=lm, aes(color=Hosp.Level)) +  
-  labs(
-    title = "Scatterplot of Wages & Nurse Staffing Levels 2020",
-    x = "Wages per FTE",
-    y = "Nurse Staffing Level",
-    color = "Hospital Level"
-  ) +
-  scale_x_continuous(labels = scales::comma, limits = c(40000, 120000))
-```
-\newpage
-### 2019 - Stratified by Hospital Level
-```{r echo=TRUE}
-ggplot(data = New.Merged.FTE.2019, aes(x=wageFTE_nurses, y=nurse.staff.level)) + 
-  geom_point(aes(color=Hosp.Level)) +
-  geom_smooth(method=lm, color="black") +
-  geom_smooth(method=lm, aes(color=Hosp.Level)) +  
-  labs(
-    title = "Scatterplot of Wages & Nurse Staffing Levels 2019",
-    x = "Wages per FTE",
-    y = "Nurse Staffing Level",
-    color = "Hospital Level"
-  ) +
-  scale_x_continuous(labels = scales::comma, limits = c(40000, 125000))
-```
-\newpage
-### 2018 - Stratified by Hospital Level
-```{r echo=TRUE}
-ggplot(data = New.Merged.FTE.2018, aes(x=wageFTE_nurses, y=nurse.staff.level)) + 
-  geom_point(aes(color=Hosp.Level)) +
-  geom_smooth(method=lm, color="black") +
-  geom_smooth(method=lm, aes(color=Hosp.Level)) +  
-  labs(
-    title = "Scatterplot of Wages & Nurse Staffing Levels 2018",
-    x = "Wages per FTE",
-    y = "Nurse Staffing Level",
-    color = "Hospital Level"
-  ) +
-  scale_x_continuous(labels = scales::comma, limits = c(35000, 150000))
 ```
 
 \newpage
@@ -189,53 +141,6 @@ New.Merged.FTE.2018 %>%
   group_by(Hosp.Level) %>%
   summarise(correlation = cor.test(phys.staff.level, wageFTE_physicians, method = "spearman", exact = FALSE)$estimate,
   p_value = cor.test(phys.staff.level, wageFTE_physicians, method = "spearman", exact = FALSE)$p.value)
-```
-\newpage
-## Physician Scatterplots
-### 2020 - Stratified by Hospital Level
-\newpage
-```{r echo=TRUE}
-ggplot(data = New.Merged.FTE.2020, aes(x=wageFTE_physicians, y=phys.staff.level)) + 
-  geom_point(aes(color=Hosp.Level)) +
-  geom_smooth(method=lm, color="black") +
-  geom_smooth(method=lm, aes(color=Hosp.Level)) +  
-  labs(
-    title = "Scatterplot of Wages & Physician Staffing Levels 2020",
-    x = "Wages per FTE",
-    y = "Physician Staffing Level",
-    color = "Hospital Level"
-  ) +
-  scale_x_continuous(labels = scales::comma, limits = c(80000, 400000))
-```
-\newpage
-## 2019 - Stratified by Hospital Level
-```{r echo=TRUE}
-ggplot(data = New.Merged.FTE.2019, aes(x=wageFTE_physicians, y=phys.staff.level)) + 
-  geom_point(aes(color=Hosp.Level)) +
-  geom_smooth(method=lm, color="black") +
-  geom_smooth(method=lm, aes(color=Hosp.Level)) +  
-  labs(
-    title = "Scatterplot of Wages & Physician Staffing Levels 2019",
-    x = "Wages per FTE",
-    y = "Physician Staffing Level",
-    color = "Hospital Level"
-  ) +
-  scale_x_continuous(labels = scales::comma, limits = c(100000, 400000))
-```
-\newpage
-### 2018 - Stratified by Hospital Level
-```{r echo=TRUE}
-ggplot(data = New.Merged.FTE.2018, aes(x=wageFTE_physicians, y=phys.staff.level)) + 
-  geom_point(aes(color=Hosp.Level)) +
-  geom_smooth(method=lm, color="black") +
-  geom_smooth(method=lm, aes(color=Hosp.Level)) +  
-  labs(
-    title = "Scatterplot of Wages & Physician Staffing Levels 2018",
-    x = "Wages per FTE",
-    y = "Physician Staffing Level",
-    color = "Hospital Level"
-  ) +
-  scale_x_continuous(labels = scales::comma, limits = c(100000, 400000))
 ```
 
 \newpage
