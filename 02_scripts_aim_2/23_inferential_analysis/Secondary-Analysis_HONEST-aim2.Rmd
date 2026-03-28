@@ -275,13 +275,6 @@ combined_20 <- nurse20 + phys20 +
 
 print(combined_20)
 
-ggsave(
-  filename = "Fig3_Scatterplot of Wages & Staffing Levels 2020.png",
-  plot = combined_20,
-  width = 300,
-  units = "mm", 
-  dpi = 300
-)
 ```
 
 \newpage
@@ -320,13 +313,6 @@ combined_19 <- nurse19 + phys19 +
 
 print(combined_19)
 
-ggsave(
-  filename = "Fig1_Scatterplot of Wages & Staffing Levels 2019.png",
-  plot = combined_19,
-  width = 300,
-  units = "mm", 
-  dpi = 300
-)
 ```
 
 \newpage
@@ -363,14 +349,7 @@ combined_18 <- nurse18 + phys18 +
     text = element_text(family = "Times New Roman")
   )
 
-print(combined_18)
+print(combined_18) 
 
-ggsave(
-  filename = "Fig1_Scatterplot of Wages & Staffing Levels 2018.png",
-  plot = combined_18,
-  width = 300,
-  units = "mm", 
-  dpi = 300
-)
 ```
 
