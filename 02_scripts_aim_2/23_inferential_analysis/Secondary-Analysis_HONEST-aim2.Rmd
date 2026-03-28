@@ -38,6 +38,11 @@ cor(New.Merged.FTE.2020$nurse.staff.level, New.Merged.FTE.2020$wageFTE_nurses, m
 cor(New.Merged.FTE.2019$nurse.staff.level, New.Merged.FTE.2019$wageFTE_nurses, method="spearman")
 cor(New.Merged.FTE.2018$nurse.staff.level, New.Merged.FTE.2018$wageFTE_nurses, method="spearman")
 
+# Correlation Nurses - Overall with p-values
+cor.test(New.Merged.FTE.2020$nurse.staff.level, New.Merged.FTE.2020$wageFTE_nurses, method="spearman")
+cor.test(New.Merged.FTE.2019$nurse.staff.level, New.Merged.FTE.2019$wageFTE_nurses, method="spearman")
+cor.test(New.Merged.FTE.2018$nurse.staff.level, New.Merged.FTE.2018$wageFTE_nurses, method="spearman")
+
 # Correlation Nurses - Stratified by Hospital Level
 ## 2020
 New.Merged.FTE.2020 %>%
@@ -53,6 +58,26 @@ New.Merged.FTE.2019 %>%
 New.Merged.FTE.2018 %>%
   group_by(Hosp.Level) %>%
   summarise(correlation = cor(nurse.staff.level, wageFTE_nurses, method = "spearman"))
+
+# Correlation Nurses - Stratified by Hospital Level with p-values
+## 2020
+New.Merged.FTE.2020 %>%
+  group_by(Hosp.Level) %>%
+  summarise(correlation = cor.test(nurse.staff.level, wageFTE_nurses, method = "spearman", exact = FALSE)$estimate,
+  pvalue = cor.test(nurse.staff.level, wageFTE_nurses, method = "spearman", exact = FALSE)$p.value)
+
+## 2019
+New.Merged.FTE.2019 %>%
+  group_by(Hosp.Level) %>%
+  summarise(correlation = cor.test(nurse.staff.level, wageFTE_nurses, method = "spearman", exact = FALSE)$estimate,
+  pvalue = cor.test(nurse.staff.level, wageFTE_nurses, method = "spearman", exact = FALSE)$p.value)
+
+## 2018
+New.Merged.FTE.2018 %>%
+  group_by(Hosp.Level) %>%
+  summarise(correlation = cor.test(nurse.staff.level, wageFTE_nurses, method = "spearman", exact = FALSE)$estimate,
+  pvalue = cor.test(nurse.staff.level, wageFTE_nurses, method = "spearman", exact = FALSE)$p.value)
+
 
 
 ```
@@ -124,6 +149,11 @@ cor(New.Merged.FTE.2020$phys.staff.level, New.Merged.FTE.2020$wageFTE_physicians
 cor(New.Merged.FTE.2019$phys.staff.level, New.Merged.FTE.2019$wageFTE_physicians, method="spearman")
 cor(New.Merged.FTE.2018$phys.staff.level, New.Merged.FTE.2018$wageFTE_physicians, method="spearman")
 
+# Correlation Physicians - Overall with p-values
+cor.test(New.Merged.FTE.2020$phys.staff.level, New.Merged.FTE.2020$wageFTE_physicians, method="spearman")
+cor.test(New.Merged.FTE.2019$phys.staff.level, New.Merged.FTE.2019$wageFTE_physicians, method="spearman")
+cor.test(New.Merged.FTE.2018$phys.staff.level, New.Merged.FTE.2018$wageFTE_physicians, method="spearman")
+
 # Correlation Physicians - Stratified by Hospital Level
 ## 2020
 New.Merged.FTE.2020 %>%
@@ -139,6 +169,26 @@ New.Merged.FTE.2019 %>%
 New.Merged.FTE.2018 %>%
   group_by(Hosp.Level) %>%
   summarise(correlation = cor(phys.staff.level, wageFTE_physicians, method = "spearman"))
+
+
+# Correlation Physicians - Stratified by Hospital Level with p-values
+## 2020
+New.Merged.FTE.2020 %>%
+  group_by(Hosp.Level) %>%
+  summarise(correlation = cor.test(phys.staff.level, wageFTE_physicians, method = "spearman", exact = FALSE)$estimate,
+  p_value = cor.test(phys.staff.level, wageFTE_physicians, method = "spearman", exact = FALSE)$p.value)
+
+## 2019
+New.Merged.FTE.2019 %>%
+  group_by(Hosp.Level) %>%
+  summarise(correlation = cor.test(phys.staff.level, wageFTE_physicians, method = "spearman", exact = FALSE)$estimate,
+  p_value = cor.test(phys.staff.level, wageFTE_physicians, method = "spearman", exact = FALSE)$p.value)
+
+## 2018
+New.Merged.FTE.2018 %>%
+  group_by(Hosp.Level) %>%
+  summarise(correlation = cor.test(phys.staff.level, wageFTE_physicians, method = "spearman", exact = FALSE)$estimate,
+  p_value = cor.test(phys.staff.level, wageFTE_physicians, method = "spearman", exact = FALSE)$p.value)
 ```
 \newpage
 ## Physician Scatterplots
@@ -215,33 +265,23 @@ phys20 <- ggplot(data = New.Merged.FTE.2020, aes(x=wageFTE_physicians, y=phys.st
        y = "Staffing Level",
        colour = "Hospital Level") +
   theme_minimal(base_family = "Times New Roman") +
-  scale_x_continuous(labels = scales::comma, limits = c(100000, 400000))
+  scale_x_continuous(labels = scales::comma, limits = c(80000, 400000))
 
 
 combined_20 <- nurse20 + phys20 +
-  plot_annotation(
-    title   = "Scatterplot of Wages &  Staffing Levels, 2020",
-    caption = "(A) Nurses, (B) Physicians",
-    theme   = theme(
-      plot.title = element_text(
-        family = "Times New Roman",
-        size   = 16,
-        face   = "bold",
-        hjust  = 0.5
-      ),
-      plot.caption = element_text(
-        family = "Times New Roman",
-        size   = 10,
-        hjust  = 0,
-        margin = margin(t = 10)
-      )
-    )
-  ) &
   theme(
     text = element_text(family = "Times New Roman")
   )
 
 print(combined_20)
+
+ggsave(
+  filename = "Fig3_Scatterplot of Wages & Staffing Levels 2020.png",
+  plot = combined_20,
+  width = 300,
+  units = "mm", 
+  dpi = 300
+)
 ```
 
 \newpage
@@ -270,33 +310,23 @@ phys19 <- ggplot(data = New.Merged.FTE.2019, aes(x=wageFTE_physicians, y=phys.st
        y = "Staffing Level",
        colour = "Hospital Level") +
   theme_minimal(base_family = "Times New Roman") +
-  scale_x_continuous(labels = scales::comma, limits = c(100000, 400000))
+  scale_x_continuous(labels = scales::comma, limits = c(80000, 400000))
 
 
 combined_19 <- nurse19 + phys19 +
-  plot_annotation(
-    title   = "Scatterplot of Wages &  Staffing Levels, 2019",
-    caption = "(A) Nurses, (B) Physicians",
-    theme   = theme(
-      plot.title = element_text(
-        family = "Times New Roman",
-        size   = 16,
-        face   = "bold",
-        hjust  = 0.5
-      ),
-      plot.caption = element_text(
-        family = "Times New Roman",
-        size   = 10,
-        hjust  = 0,
-        margin = margin(t = 10)
-      )
-    )
-  ) &
   theme(
     text = element_text(family = "Times New Roman")
   )
 
 print(combined_19)
+
+ggsave(
+  filename = "Fig1_Scatterplot of Wages & Staffing Levels 2019.png",
+  plot = combined_19,
+  width = 300,
+  units = "mm", 
+  dpi = 300
+)
 ```
 
 \newpage
@@ -325,32 +355,22 @@ phys18 <- ggplot(data = New.Merged.FTE.2018, aes(x=wageFTE_physicians, y=phys.st
        y = "Staffing Level",
        colour = "Hospital Level") +
   theme_minimal(base_family = "Times New Roman") +
-  scale_x_continuous(labels = scales::comma, limits = c(100000, 400000))
+  scale_x_continuous(labels = scales::comma, limits = c(80000, 400000))
 
 
 combined_18 <- nurse18 + phys18 +
-  plot_annotation(
-    title   = "Scatterplot of Wages &  Staffing Levels, 2018",
-    caption = "(A) Nurses, (B) Physicians",
-    theme   = theme(
-      plot.title = element_text(
-        family = "Times New Roman",
-        size   = 16,
-        face   = "bold",
-        hjust  = 0.5
-      ),
-      plot.caption = element_text(
-        family = "Times New Roman",
-        size   = 10,
-        hjust  = 0,
-        margin = margin(t = 10)
-      )
-    )
-  ) &
   theme(
     text = element_text(family = "Times New Roman")
   )
 
 print(combined_18)
+
+ggsave(
+  filename = "Fig1_Scatterplot of Wages & Staffing Levels 2018.png",
+  plot = combined_18,
+  width = 300,
+  units = "mm", 
+  dpi = 300
+)
 ```
 
